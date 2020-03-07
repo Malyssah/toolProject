@@ -6,8 +6,10 @@ namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -41,4 +43,15 @@ class GestionUser extends AbstractController
 		));
 	}
 
+	/**
+	 * @Route("/user/list", name="list-users")
+	 * @param UserRepository $users
+	 * @return Response
+	 */
+	public function usersList(UserRepository $users)
+	{
+		return $this->render('user/users.html.twig', [
+			'users' => $users->findAll(),
+		]);
+	}
 }

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des utilisateurs</h1>
+
+        {# On boucle sur les utilisateurs #}
+        {% for user in users %}
+            {{ user.username }}<br>
+        {% endfor %}
+    </div>
+{% endblock %}
