@@ -8,6 +8,8 @@
 
     <a href="{{ path('create-user') }}">Créer un utilisateur - </a>
     <a href="{{ path('list-users') }}"> Voir les utilisateurs - </a>
+    <a href="{{ path('add_Alliance') }}"> Créer une alliance - </a>
+    <a href="{{ path('list-alliances') }}"> Voir les alliances - </a>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}
