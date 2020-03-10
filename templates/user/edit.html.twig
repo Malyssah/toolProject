@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter un utilisateur{% endblock %}
+{% block title %}Modifier{% endblock %}
 
 {% block body %}
+    <h2>Modifier</h2>
+
     {{ form_start(form) }}
     {{ form_row(form.email) }}
     {{ form_row(form.username) }}
     {{ form_row(form.roles) }}
     {{ form_row(form.plainPassword) }}
-    {{ form_row(form.Ajouter) }}
+    {{ form_row(form.Modifier) }}
     {{ form_end(form) }}
+
 {% endblock %}

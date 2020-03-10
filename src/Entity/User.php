@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -46,6 +48,16 @@ class User implements UserInterface
      */
     private $username;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Alliance", mappedBy="user")
+     */
+    private $alliance;
+
+    public function __construct()
+    {
+        $this->alliance = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,7 +82,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
@@ -108,15 +120,15 @@ class User implements UserInterface
     }
 
 	public function getPlainPassword(): ?string
-	{
-		return $this->plainPassword;
-	}
+                        	{
+                        		return $this->plainPassword;
+                        	}
 
 	public function setPlainPassword(string $plainPassword): self
-	{
-		$this->plainPassword = $plainPassword;
-		return $this;
-	}
+                        	{
+                        		$this->plainPassword = $plainPassword;
+                        		return $this;
+                        	}
 
     /**
      * @see UserInterface
@@ -138,6 +150,34 @@ class User implements UserInterface
     public function setUsername(?string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Alliance[]
+     */
+    public function getAlliance(): Collection
+    {
+        return $this->alliance;
+    }
+
+    public function addAlliance(Alliance $alliance): self
+    {
+        if (!$this->alliance->contains($alliance)) {
+            $this->alliance[] = $alliance;
+            $alliance->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlliance(Alliance $alliance): self
+    {
+        if ($this->alliance->contains($alliance)) {
+            $this->alliance->removeElement($alliance);
+            $alliance->removeUser($this);
+        }
 
         return $this;
     }

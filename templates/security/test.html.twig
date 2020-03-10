@@ -3,19 +3,17 @@
 {% block title %}accueil{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Accueil</h1>
-        <b>ici il y aura des infos trop bien</b>
+    <h1>Accueil</h1>
+    <strong>ici il y aura des infos trop bien</strong>
 
-        <a href="{{path('create-user')}}">Créer un utilisateur</a>
-        <a href="{{path('list-users')}}">Voir les utilisateurs</a>
+    <a href="{{ path('create-user') }}">Créer un utilisateur - </a>
+    <a href="{{ path('list-users') }}"> Voir les utilisateurs - </a>
 
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert-{{ label }}">
+                {{ message }}
+            </div>
         {% endfor %}
-    </div>
+    {% endfor %}
 {% endblock %}

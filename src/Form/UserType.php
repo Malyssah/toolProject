@@ -15,39 +15,55 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('email', EmailType::class,array(
-            	'label'=>'Email :'
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$creation = $options['creation']; //option creation pour l'ajout et edit user
+		$builder
+			->add('email', EmailType::class, array(
+				'label' => 'Email :'
 			))
-			->add('username',TextType::class,array(
-				'label'=>'Username'
+			->add('username', TextType::class, array(
+				'label' => 'Username'
 			))
-            ->add('roles', ChoiceType::class,array(
-            	'label'=>'Roles :',
-				'placeholder'=>'Sélectionnez un rôle',
-				'choices'=>array(
-					'Admin'=>'ROLE_ADMIN',
-					'Modérateur'=>'ROLE_MOD',
-					'User'=>'ROLE_USER'
+			->add('roles', ChoiceType::class, array(
+				'label' => 'Roles :',
+				'placeholder' => 'Sélectionnez un rôle',
+				'choices' => array(
+					'Admin' => 'ROLE_ADMIN',
+					'Modérateur' => 'ROLE_MOD',
+					'User' => 'ROLE_USER'
 				),
-				'expanded'=>true,
-				'multiple'=>true,
-			))
-			->add('plainPassword', RepeatedType::class, array('type' => PasswordType::class,
-				'invalid_message' => 'Les mots de passe ne sont pas identiques',
-				'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
-				'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
-				'required' => true))
-			->add('Ajouter',SubmitType::class)
-        ;
-    }
+				'expanded' => true,
+				'multiple' => true,
+			));
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
+		// nouvel utilisateur
+		if ($creation === 1) {
+			$builder
+				->add('plainPassword', RepeatedType::class, array('type' => PasswordType::class,
+					'invalid_message' => 'Les mots de passe ne sont pas identiques',
+					'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
+					'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
+					'required' => true))
+				->add('Ajouter', SubmitType::class);
+
+			// édit utilisateur
+		} elseif ($creation === 2) {
+			$builder
+				->add('plainPassword', RepeatedType::class, array('type' => PasswordType::class,
+					'invalid_message' => 'Les mots de passe ne sont pas identiques',
+					'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
+					'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
+					'required' => false))
+				->add('Modifier', SubmitType::class);
+		}
+	}
+
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults([
+			'data_class' => User::class,
+			'creation' => null,
+		]);
+	}
 }
