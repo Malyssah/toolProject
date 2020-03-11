@@ -27,6 +27,7 @@ class GestionAlliance extends AbstractController
 		$alliance = new Alliance();
 		$form = $this->createForm(AllianceType::class, $alliance);
 		$form->handleRequest($request);
+
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var Alliance $alliance */
 			$alliance = $form->getData();
@@ -46,9 +47,10 @@ class GestionAlliance extends AbstractController
 	 * @return Response
 	 */
 
-	public function listAlliance(AllianceRepository $allianceRepository)
+	public function alliancesList(AllianceRepository $allianceRepository)
 	{
 		$alliances = $allianceRepository->findAll();
+
 		return $this->render('alliance/alliances.html.twig', [
 			'alliances' => $alliances,
 		]);
