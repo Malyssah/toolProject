@@ -3,6 +3,7 @@
 namespace App\Controller\Alliance;
 
 use App\Entity\Alliance;
+use App\Form\AllianceEditType;
 use App\Form\AllianceType;
 use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,5 +55,33 @@ class GestionAlliance extends AbstractController
 		return $this->render('alliance/alliances.html.twig', [
 			'alliances' => $alliances,
 		]);
+	}
+
+	/**
+	 * @Route("alliance/edit-alliance/{id}", name="edit")
+	 * @param Alliance $alliance
+	 * @param Request $request
+	 * @param EntityManagerInterface $manager
+	 * @return RedirectResponse|Response
+	 */
+	public function editAlliance(Alliance $alliance, Request $request, EntityManagerInterface $manager)
+	{
+		$form = $this->createForm(AllianceEditType::class, $alliance);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			/** @var Alliance $alliance */
+
+			$alliance = $form->getData();
+			$manager->persist($alliance);
+			$manager->flush();
+
+			$this->addFlash('success', 'Alliance Modifié avec succès !');
+
+			return $this->redirectToRoute('list-alliances');
+		}
+		return $this->render('alliance/edit.html.twig', array(
+			'form' => $form->createView(), 'alliance' => $alliance
+		));
 	}
 }
