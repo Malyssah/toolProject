@@ -15,11 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+
 class GestionUser extends AbstractController
 {
 
 	/**
-	 * @Route("/user/create",name="addUser")
+	 * @Route("/user/add",name="addUser")
 	 * @param Request $request
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return RedirectResponse|Response
@@ -50,21 +51,21 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/list", name="listUsers")
+	 * @Route("/user", name="listUsers")
 	 * @param UserRepository $userRepository
 	 * @return Response
 	 */
 	public function usersList(UserRepository $userRepository)
 	{
-		$users = $userRepository->findAll();
 
+		$users = $userRepository->findAll();
 		return $this->render('user/users.html.twig', [
 			'users' => $users,
 		]);
 	}
 
 	/**
-	 * @Route("/user/edit-user/{id}", name="editUser")
+	 * @Route("/user/{id}", name="editUser")
 	 * @param User|null $user
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
@@ -81,19 +82,21 @@ class GestionUser extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var User $user */
+			$user = $form->getData();
+			$mdpClear = $user->getPlainPassword();
 
-			if ($user === array('creation' => 1)) {
-				$mdpEncoded = $encoder->encodePassword($user, $user->getPlainPassword());
+			if ($mdpClear) {
+				$mdpEncoded = $encoder->encodePassword($user, $mdpClear);
 				$user->setPassword($mdpEncoded);
 				$user->eraseCredentials();
-			} else {
-				$user = $form->getData();
-
-				$manager->persist($user);
-				$manager->flush();
-				$this->addFlash('success', 'Utilisateur Modifié avec succès !');
-				return $this->redirectToRoute('listUsers');
 			}
+
+
+			$manager->persist($user);
+			$manager->flush();
+			$this->addFlash('success', 'Utilisateur Modifié avec succès !');
+			return $this->redirectToRoute('editUser', array('id' => $user->getId()));
+
 		}
 		return $this->render('user/edit.html.twig', array(
 			'form' => $form->createView(),
@@ -101,7 +104,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/delete-user/{id}", name="deleteUser")
+	 * @Route("/user/delete/{id}", name="deleteUser")
 	 * @param User $user
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse

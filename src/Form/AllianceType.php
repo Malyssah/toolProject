@@ -23,11 +23,14 @@ class AllianceType extends AbstractType
 			->add('cadran', TextType::class, array(
 				'label' => 'cadran: '
 			))
+
 			->add('Enregistrer', SubmitType::class);
+
 
 	}
 
-	public function configureOptions(OptionsResolver $resolver){
+	public function configureOptions(OptionsResolver $resolver)
+	{
 		$resolver->setDefaults([
 			'data_class' => Alliance::class,
 		]);

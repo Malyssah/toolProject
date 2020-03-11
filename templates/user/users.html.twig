@@ -22,9 +22,7 @@
                         {{ user.username }}
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success btn-sm"><i class="fas fa-pen"></i>
-                            Modifier
-                        </button>
+                        <a href="{{ path('editUser',{ id:user.id }) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i>Modifier</a>
                         <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
                             supprimer
                         </button>

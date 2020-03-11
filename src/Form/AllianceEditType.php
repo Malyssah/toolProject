@@ -13,17 +13,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AllianceEditType extends AbstractType
 {
-public function buildForm(FormBuilderInterface $builder, array $options){
-	$builder
-		->add('name', TextType::class, array(
-			'label' => 'Nom: '
-		))
-		->add('cadran', TextType::class, array(
-			'label' => 'cadran: '
-		))
-		->add('Modifier', SubmitType::class);
-}
-	public function configureOptions(OptionsResolver $resolver){
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		$builder
+			->add('name', TextType::class, array(
+				'label' => 'Nom: '
+			))
+			->add('cadran', TextType::class, array(
+				'label' => 'cadran: '
+			))
+			->add('Modifier', SubmitType::class);
+	}
+
+	public function configureOptions(OptionsResolver $resolver)
+	{
 		$resolver->setDefaults([
 			'data_class' => Alliance::class,
 		]);

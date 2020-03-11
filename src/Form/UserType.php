@@ -35,7 +35,9 @@ class UserType extends AbstractType
 				),
 				'expanded' => true,
 				'multiple' => true,
-			));
+			))
+		;
+
 
 		// nouvel utilisateur
 		if ($creation === 1) {

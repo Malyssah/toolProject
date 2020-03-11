@@ -155,10 +155,9 @@ class User implements UserInterface
 	}
 
 	/**
-	 * A décommenter , le listage ally ne se faisait plus ........
 	 * @return Collection|Alliance[]
 	 */
-	/*public function getAlliance(): Collection
+	public function getAlliance(): Collection
 	{
 		return $this->alliance;
 	}
@@ -171,9 +170,9 @@ class User implements UserInterface
 		}
 
 		return $this;
-	}*/
+	}
 
-	/*public function removeAlliance(Alliance $alliance): self
+	public function removeAlliance(Alliance $alliance): self
 	{
 		if ($this->alliance->contains($alliance)) {
 			$this->alliance->removeElement($alliance);
@@ -181,5 +180,5 @@ class User implements UserInterface
 		}
 
 		return $this;
-	}*/
+	}
 }

@@ -58,7 +58,7 @@ class GestionAlliance extends AbstractController
 	}
 
 	/**
-	 * @Route("alliance/edit-alliance/{id}", name="edit")
+	 * @Route("alliance/edit-alliance/{id}", name="editAlliance")
 	 * @param Alliance $alliance
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
@@ -76,7 +76,7 @@ class GestionAlliance extends AbstractController
 			$manager->persist($alliance);
 			$manager->flush();
 
-			$this->addFlash('success', 'Alliance Modifié avec succès !');
+			$this->addFlash('success', 'Groupe modifié !');
 
 			return $this->redirectToRoute('listAlliances');
 		}
@@ -91,7 +91,7 @@ class GestionAlliance extends AbstractController
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse
 	 */
-	public function deleteUser(Alliance $alliance, EntityManagerInterface $manager)
+	public function deleteAlliance(Alliance $alliance, EntityManagerInterface $manager)
 	{
 		$manager->remove($alliance);
 		$manager->flush();

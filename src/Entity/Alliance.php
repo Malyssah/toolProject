@@ -29,7 +29,7 @@ class Alliance
     private $cadran;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\user", inversedBy="alliance")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="alliance")
      */
     private $user;
 
