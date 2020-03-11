@@ -4,12 +4,12 @@
 
 {% block body %}
     <h1>Accueil</h1>
-    <strong>ici il y aura des infos trop bien</strong>
+    <strong>ici il y aura des infos trop bien</strong> <br>
 
-    <a href="{{ path('create-user') }}">Créer un utilisateur - </a>
-    <a href="{{ path('list-users') }}"> Voir les utilisateurs - </a>
-    <a href="{{ path('add_Alliance') }}"> Créer une alliance - </a>
-    <a href="{{ path('list-alliances') }}"> Voir les alliances - </a>
+    <a href="{{ path('addUser') }}">Créer un utilisateur</a><br>
+    <a href="{{ path('listUsers') }}"> Voir les utilisateurs</a><br>
+    <a href="{{ path('addAlliance') }}"> Créer une alliance</a><br>
+    <a href="{{ path('listAlliances') }}"> Voir les alliances</a>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}
