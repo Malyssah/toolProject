@@ -20,18 +20,18 @@ class UserType extends AbstractType
 		$creation = $options['creation']; //option creation pour l'ajout et edit user
 		$builder
 			->add('email', EmailType::class, array(
-				'label' => 'Email :'
+				'label' => 'Email:'
 			))
 			->add('username', TextType::class, array(
-				'label' => 'Username'
+				'label' => 'Pseudo:'
 			))
 			->add('roles', ChoiceType::class, array(
-				'label' => 'Roles :',
+				'label' => 'Roles:',
 				'placeholder' => 'Sélectionnez un rôle',
 				'choices' => array(
-					'Admin' => 'ROLE_ADMIN',
-					'Modérateur' => 'ROLE_MOD',
-					'User' => 'ROLE_USER'
+					'Admin ' => 'ROLE_ADMIN',
+					'Modérateur ' => 'ROLE_MOD',
+					'User ' => 'ROLE_USER'
 				),
 				'expanded' => true,
 				'multiple' => true,
