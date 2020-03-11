@@ -81,29 +81,36 @@ class GestionUser extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var User $user */
-			//TODO : Faire l'édition avec prise en compte du mdp ou non si null
-			/**
-			 * si mp modifié {
-			 * on encode
-			 * }sinon{
-			 * on ne prend pas en compte
-			 * }
-			 */
+
 			if ($user === array('creation' => 1)) {
 				$mdpEncoded = $encoder->encodePassword($user, $user->getPlainPassword());
 				$user->setPassword($mdpEncoded);
 				$user->eraseCredentials();
 			} else {
 				$user = $form->getData();
-				dd($user);
+
 				$manager->persist($user);
 				$manager->flush();
 				$this->addFlash('success', 'Utilisateur Modifié avec succès !');
-				return $this->redirectToRoute('main');
+				return $this->redirectToRoute('list-users');
 			}
 		}
 		return $this->render('user/edit.html.twig', array(
 			'form' => $form->createView(),
 		));
+	}
+
+	/**
+	 * @Route("/user/delete-user/{id}", name="delete")
+	 * @param User $user
+	 * @param EntityManagerInterface $manager
+	 * @return RedirectResponse
+	 */
+	public function deleteUser(User $user, EntityManagerInterface $manager)
+	{
+		$manager->remove($user);
+		$manager->flush();
+		$this->addFlash('danger', 'Utilisateur supprimé !');
+		return $this->redirectToRoute('main');
 	}
 }
