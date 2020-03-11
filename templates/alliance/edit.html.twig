@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier groupe{% endblock %}
+
+{% block body %}
+    <h2>Modifier</h2>
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.cadran) }}
+    {{ form_row(form.Modifier) }}
+    {{ form_end(form) }}
+{% endblock %}
