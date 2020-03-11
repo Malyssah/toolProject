@@ -3,12 +3,35 @@
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-
     <h1>Liste des utilisateurs</h1>
-
-    {# On boucle sur les utilisateurs #}
-    {% for user in users %}
-        {{ user.username }}<br>
-    {% endfor %}
-
+    <section class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pseudo</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        {{ user.id }}
+                    </td>
+                    <td>
+                        {{ user.username }}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm"><i class="fas fa-pen"></i>
+                            Modifier
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
+                            supprimer
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
 {% endblock %}
