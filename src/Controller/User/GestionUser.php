@@ -19,7 +19,7 @@ class GestionUser extends AbstractController
 {
 
 	/**
-	 * @Route("/user/create",name="create-user")
+	 * @Route("/user/create",name="addUser")
 	 * @param Request $request
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return RedirectResponse|Response
@@ -50,7 +50,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/list", name="list-users")
+	 * @Route("/user/list", name="listUsers")
 	 * @param UserRepository $userRepository
 	 * @return Response
 	 */
@@ -64,7 +64,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/edit-user/{id}", name="edit")
+	 * @Route("/user/edit-user/{id}", name="editUser")
 	 * @param User|null $user
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
@@ -92,7 +92,7 @@ class GestionUser extends AbstractController
 				$manager->persist($user);
 				$manager->flush();
 				$this->addFlash('success', 'Utilisateur Modifié avec succès !');
-				return $this->redirectToRoute('list-users');
+				return $this->redirectToRoute('listUsers');
 			}
 		}
 		return $this->render('user/edit.html.twig', array(
@@ -101,7 +101,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/delete-user/{id}", name="delete")
+	 * @Route("/user/delete-user/{id}", name="deleteUser")
 	 * @param User $user
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse
