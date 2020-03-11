@@ -17,7 +17,7 @@ class GestionAlliance extends AbstractController
 {
 
 	/**
-	 * @Route("/alliance/create",name="add_Alliance")
+	 * @Route("/alliance/create",name="addAlliance")
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse|Response
@@ -43,7 +43,7 @@ class GestionAlliance extends AbstractController
 	}
 
 	/**
-	 * @Route("alliance/list",name="list-alliances")
+	 * @Route("alliance/list",name="listAlliances")
 	 * @param AllianceRepository $allianceRepository
 	 * @return Response
 	 */
@@ -78,10 +78,24 @@ class GestionAlliance extends AbstractController
 
 			$this->addFlash('success', 'Alliance Modifié avec succès !');
 
-			return $this->redirectToRoute('list-alliances');
+			return $this->redirectToRoute('listAlliances');
 		}
 		return $this->render('alliance/edit.html.twig', array(
 			'form' => $form->createView(), 'alliance' => $alliance
 		));
+	}
+
+	/**
+	 * @Route("/alliance/delete-alliance/{id}", name="deleteAlliance")
+	 * @param Alliance $alliance
+	 * @param EntityManagerInterface $manager
+	 * @return RedirectResponse
+	 */
+	public function deleteUser(Alliance $alliance, EntityManagerInterface $manager)
+	{
+		$manager->remove($alliance);
+		$manager->flush();
+		$this->addFlash('danger', 'Groupe supprimé !');
+		return $this->redirectToRoute('main');
 	}
 }
