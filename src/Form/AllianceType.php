@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Alliance;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,18 +23,32 @@ class AllianceType extends AbstractType
 				->add('name', TextType::class, array(
 					'label' => 'Nom: '
 				))
-				->add('cadran', TextType::class, array(
-					'label' => 'cadran: '
+				->add('cadran', ChoiceType::class, array(
+					'label' => 'cadran: ',
+					'placeholder' => 'Sélectionnez votre cadran',
+					'choices' => array(
+						'SO' => 'SO',
+						'NO' => 'NO',
+						'SE' => 'SE',
+						'NE' => 'SE'
+					),
 				))
 				->add('Enregistrer', SubmitType::class);
-
+//edit
 		} elseif ($creation === 2) {
 			$builder
 				->add('name', TextType::class, array(
 					'label' => 'Nom: '
 				))
-				->add('cadran', TextType::class, array(
-					'label' => 'cadran: '
+				->add('cadran', ChoiceType::class, array(
+					'label' => 'cadran: ',
+					'placeholder' => 'Sélectionnez votre cadran',
+					'choices' => array(
+						'SO' => 'SO',
+						'NO' => 'NO',
+						'SE' => 'SE',
+						'NE' => 'SE'
+					),
 				))
 				->add('Modifier', SubmitType::class);
 		}
@@ -48,5 +63,3 @@ class AllianceType extends AbstractType
 		]);
 	}
 }
-
-

@@ -25,7 +25,7 @@ class GestionAlliance extends AbstractController
 	public function addAlliance(Request $request, EntityManagerInterface $manager)
 	{
 		$alliance = new Alliance();
-		$form = $this->createForm(AllianceType::class, $alliance);
+		$form = $this->createForm(AllianceType::class, $alliance, array('creation' => 1));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -37,7 +37,7 @@ class GestionAlliance extends AbstractController
 			return $this->redirectToRoute('list-Alliances');
 		}
 		return $this->render('alliance/add-Alliance.html.twig', array(
-			'form' => $form->createView(),
+			'form' => $form->createView(), 'alliance' => $alliance
 		));
 	}
 

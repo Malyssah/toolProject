@@ -22,10 +22,11 @@ class GestionUser extends AbstractController
 	/**
 	 * @Route("/user/add",name="add-User")
 	 * @param Request $request
+	 * @param EntityManagerInterface $manager
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return RedirectResponse|Response
 	 */
-	public function addUser(Request $request, UserPasswordEncoderInterface $encoder)
+	public function addUser(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
 	{
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user, array('creation' => 1));
@@ -37,9 +38,8 @@ class GestionUser extends AbstractController
 			$mdpEncoded = $encoder->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($mdpEncoded);
 			$user->eraseCredentials();
-			$entitymanager = $this->getDoctrine()->getManager();
-			$entitymanager->persist($user);
-			$entitymanager->flush();
+			$manager->persist($user);
+			$manager->flush();
 			$this->addFlash('success', 'Utilisateur Ajouté !');
 
 			return $this->redirectToRoute('list-Users');
