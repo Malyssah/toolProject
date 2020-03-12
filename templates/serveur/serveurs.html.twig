@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des serveurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des serveurs</h1>
+
+    <section class="container">
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>nom</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for serveur in serveurs %}
+
+            <tr>
+                <td>{{ serveur.id }}</td>
+                <td>{{ serveur.name }}</td>
+                <td>
+                    <a href="{{ path('edit-Serveur',{ id:serveur.id }) }}" class="btn btn-success btn-sm"><i
+                                class="fas fa-pen"></i> Modifier</a>
+                    <a href="{{ path('delete-Serveur',{ id:serveur.id }) }}" class=" btn btn-danger btn-sm"><i
+                                   class="fas fa-trash"></i> Supprimer</a>
+                   </td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+{% endblock %}
+
+

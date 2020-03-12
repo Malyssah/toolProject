@@ -20,7 +20,7 @@ class ServeurRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Serveur[] Returns an array of Serveur objects
+    //  * @return serveur[] Returns an array of serveur objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ServeurRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Serveur
+    public function findOneBySomeField($value): ?serveur
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

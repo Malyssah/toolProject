@@ -3,7 +3,6 @@
 namespace App\Controller\Alliance;
 
 use App\Entity\Alliance;
-use App\Form\AllianceEditType;
 use App\Form\AllianceType;
 use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +14,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GestionAlliance extends AbstractController
 {
+
+	/**
+	 * @Route("alliance",name="list-Alliances")
+	 * @param AllianceRepository $allianceRepository
+	 * @return Response
+	 */
+	public function alliancesList(AllianceRepository $allianceRepository)
+	{
+		$alliances = $allianceRepository->findAll();
+
+		return $this->render('alliance/alliances.html.twig', [
+			'alliances' => $alliances,
+		]);
+	}
 
 	/**
 	 * @Route("/alliance/add",name="add-Alliance")
@@ -42,21 +55,6 @@ class GestionAlliance extends AbstractController
 	}
 
 	/**
-	 * @Route("alliance",name="list-Alliances")
-	 * @param AllianceRepository $allianceRepository
-	 * @return Response
-	 */
-
-	public function alliancesList(AllianceRepository $allianceRepository)
-	{
-		$alliances = $allianceRepository->findAll();
-
-		return $this->render('alliance/alliances.html.twig', [
-			'alliances' => $alliances,
-		]);
-	}
-
-	/**
 	 * @Route("alliance/{id}", name="edit-Alliance")
 	 * @param Alliance $alliance
 	 * @param Request $request
@@ -65,7 +63,7 @@ class GestionAlliance extends AbstractController
 	 */
 	public function editAlliance(Alliance $alliance, Request $request, EntityManagerInterface $manager)
 	{
-		$form = $this->createForm(AllianceEditType::class, $alliance);
+		$form = $this->createForm(AllianceType::class, $alliance);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -79,7 +77,7 @@ class GestionAlliance extends AbstractController
 
 			return $this->redirectToRoute('edit-Alliance', array('id' => $alliance->getId()));
 		}
-		return $this->render('alliance/edit-alliance.html.twig', array(
+		return $this->render('alliance/edit-Alliance.html.twig', array(
 			'form' => $form->createView(), 'alliance' => $alliance
 		));
 	}
@@ -95,6 +93,6 @@ class GestionAlliance extends AbstractController
 		$manager->remove($alliance);
 		$manager->flush();
 		$this->addFlash('danger', 'Groupe supprimé !');
-		return $this->redirectToRoute('main');
+		return $this->redirectToRoute('list-Alliances');
 	}
 }

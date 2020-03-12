@@ -9,7 +9,9 @@
     <a href="{{ path('add-User') }}">Créer un utilisateur</a><br>
     <a href="{{ path('list-Users') }}"> Voir les utilisateurs</a><br>
     <a href="{{ path('add-Alliance') }}"> Créer une alliance</a><br>
-    <a href="{{ path('list-Alliances') }}"> Voir les alliances</a>
+    <a href="{{ path('list-Alliances') }}"> Voir les alliances</a><br>
+    <a href="{{ path('add-Serveur') }}"> Créer un serveur</a><br>
+    <a href="{{ path('list-Serveurs') }}"> Voir les serveurs</a><br>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}

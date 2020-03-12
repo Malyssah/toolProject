@@ -18,6 +18,19 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class GestionUser extends AbstractController
 {
+	/**
+	 * @Route("/user", name="list-Users")
+	 * @param UserRepository $userRepository
+	 * @return Response
+	 */
+	public function usersList(UserRepository $userRepository)
+	{
+
+		$users = $userRepository->findAll();
+		return $this->render('user/users.html.twig', [
+			'users' => $users,
+		]);
+	}
 
 	/**
 	 * @Route("/user/add",name="add-User")
@@ -48,20 +61,6 @@ class GestionUser extends AbstractController
 		return $this->render('user/add-user.html.twig', array(
 			'form' => $form->createView(),
 		));
-	}
-
-	/**
-	 * @Route("/user", name="list-Users")
-	 * @param UserRepository $userRepository
-	 * @return Response
-	 */
-	public function usersList(UserRepository $userRepository)
-	{
-
-		$users = $userRepository->findAll();
-		return $this->render('user/users.html.twig', [
-			'users' => $users,
-		]);
 	}
 
 	/**

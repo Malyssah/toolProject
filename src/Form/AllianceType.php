@@ -17,42 +17,29 @@ class AllianceType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$creation = $options['creation']; //option creation pour l'ajout et edit
-//nouvelle alliance
+
+			$builder
+				->add('name', TextType::class, array(
+					'label' => 'Nom: '
+				))
+				->add('cadran', ChoiceType::class, array(
+					'label' => 'cadran: ',
+					'placeholder' => 'Sélectionnez votre cadran',
+					'choices' => array(
+						'SO' => 'SO',
+						'NO' => 'NO',
+						'SE' => 'SE',
+						'NE' => 'SE'
+					),
+				));
+
 		if ($creation === 1) {
 			$builder
-				->add('name', TextType::class, array(
-					'label' => 'Nom: '
-				))
-				->add('cadran', ChoiceType::class, array(
-					'label' => 'cadran: ',
-					'placeholder' => 'Sélectionnez votre cadran',
-					'choices' => array(
-						'SO' => 'SO',
-						'NO' => 'NO',
-						'SE' => 'SE',
-						'NE' => 'SE'
-					),
-				))
 				->add('Enregistrer', SubmitType::class);
-//edit
-		} elseif ($creation === 2) {
+		}else{
 			$builder
-				->add('name', TextType::class, array(
-					'label' => 'Nom: '
-				))
-				->add('cadran', ChoiceType::class, array(
-					'label' => 'cadran: ',
-					'placeholder' => 'Sélectionnez votre cadran',
-					'choices' => array(
-						'SO' => 'SO',
-						'NO' => 'NO',
-						'SE' => 'SE',
-						'NE' => 'SE'
-					),
-				))
 				->add('Modifier', SubmitType::class);
 		}
-
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
