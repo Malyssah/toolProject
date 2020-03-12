@@ -6,6 +6,15 @@
     <h1>Liste des utilisateurs</h1>
     <section class="container">
         <table class="table table-striped">
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
             <thead>
             <tr>
                 <th>ID</th>
@@ -22,10 +31,10 @@
                         {{ user.username }}
                     </td>
                     <td>
-                        <a href="{{ path('editUser',{ id:user.id }) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i>Modifier</a>
-                        <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>
-                            supprimer
-                        </button>
+                        <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success btn-sm"><i
+                                    class="fas fa-pen"></i>Modifier</a>
+                        <a href="{{ path('delete-User',{ id:user.id }) }}" class=" btn btn-danger btn-sm"><i
+                                    class="fas fa-trash"></i>supprimer</a>
                     </td>
                 </tr>
             {% endfor %}

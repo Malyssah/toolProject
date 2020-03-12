@@ -17,13 +17,12 @@ class GestionAlliance extends AbstractController
 {
 
 	/**
-	 * @Route("/alliance/create",name="addAlliance")
+	 * @Route("/alliance/add",name="add-Alliance")
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse|Response
 	 */
-
-	public function createAlliance(Request $request, EntityManagerInterface $manager)
+	public function addAlliance(Request $request, EntityManagerInterface $manager)
 	{
 		$alliance = new Alliance();
 		$form = $this->createForm(AllianceType::class, $alliance);
@@ -35,15 +34,15 @@ class GestionAlliance extends AbstractController
 			$manager->persist($alliance);
 			$manager->flush();
 			$this->addFlash('success', 'Groupe crée avec succès !');
-			return $this->redirectToRoute('main');
+			return $this->redirectToRoute('list-Alliances');
 		}
-		return $this->render('alliance/add_Alliance.html.twig', array(
+		return $this->render('alliance/add-Alliance.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
 
 	/**
-	 * @Route("alliance/list",name="listAlliances")
+	 * @Route("alliance",name="list-Alliances")
 	 * @param AllianceRepository $allianceRepository
 	 * @return Response
 	 */
@@ -58,7 +57,7 @@ class GestionAlliance extends AbstractController
 	}
 
 	/**
-	 * @Route("alliance/edit-alliance/{id}", name="editAlliance")
+	 * @Route("alliance/{id}", name="edit-Alliance")
 	 * @param Alliance $alliance
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
@@ -78,15 +77,15 @@ class GestionAlliance extends AbstractController
 
 			$this->addFlash('success', 'Groupe modifié !');
 
-			return $this->redirectToRoute('listAlliances');
+			return $this->redirectToRoute('edit-Alliance', array('id' => $alliance->getId()));
 		}
-		return $this->render('alliance/edit.html.twig', array(
+		return $this->render('alliance/edit-alliance.html.twig', array(
 			'form' => $form->createView(), 'alliance' => $alliance
 		));
 	}
 
 	/**
-	 * @Route("/alliance/delete-alliance/{id}", name="deleteAlliance")
+	 * @Route("/alliance/delete/{id}", name="delete-Alliance")
 	 * @param Alliance $alliance
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse

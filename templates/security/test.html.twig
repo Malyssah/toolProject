@@ -6,10 +6,10 @@
     <h1>Accueil</h1>
     <strong>ici il y aura des infos trop bien</strong> <br>
 
-    <a href="{{ path('addUser') }}">Créer un utilisateur</a><br>
-    <a href="{{ path('listUsers') }}"> Voir les utilisateurs</a><br>
-    <a href="{{ path('addAlliance') }}"> Créer une alliance</a><br>
-    <a href="{{ path('listAlliances') }}"> Voir les alliances</a>
+    <a href="{{ path('add-User') }}">Créer un utilisateur</a><br>
+    <a href="{{ path('list-Users') }}"> Voir les utilisateurs</a><br>
+    <a href="{{ path('add-Alliance') }}"> Créer une alliance</a><br>
+    <a href="{{ path('list-Alliances') }}"> Voir les alliances</a>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}

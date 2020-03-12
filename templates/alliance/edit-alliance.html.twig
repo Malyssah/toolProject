@@ -5,6 +5,14 @@
 {% block body %}
     <h2>Modifier</h2>
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     {{ form_start(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.cadran) }}

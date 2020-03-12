@@ -15,17 +15,28 @@ class AllianceType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		$creation = $options['creation']; //option creation pour l'ajout et edit
+//nouvelle alliance
+		if ($creation === 1) {
+			$builder
+				->add('name', TextType::class, array(
+					'label' => 'Nom: '
+				))
+				->add('cadran', TextType::class, array(
+					'label' => 'cadran: '
+				))
+				->add('Enregistrer', SubmitType::class);
 
-		$builder
-			->add('name', TextType::class, array(
-				'label' => 'Nom: '
-			))
-			->add('cadran', TextType::class, array(
-				'label' => 'cadran: '
-			))
-
-			->add('Enregistrer', SubmitType::class);
-
+		} elseif ($creation === 2) {
+			$builder
+				->add('name', TextType::class, array(
+					'label' => 'Nom: '
+				))
+				->add('cadran', TextType::class, array(
+					'label' => 'cadran: '
+				))
+				->add('Modifier', SubmitType::class);
+		}
 
 	}
 
@@ -33,6 +44,7 @@ class AllianceType extends AbstractType
 	{
 		$resolver->setDefaults([
 			'data_class' => Alliance::class,
+			'creation' => null,
 		]);
 	}
 }

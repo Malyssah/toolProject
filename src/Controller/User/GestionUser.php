@@ -20,12 +20,12 @@ class GestionUser extends AbstractController
 {
 
 	/**
-	 * @Route("/user/add",name="addUser")
+	 * @Route("/user/add",name="add-User")
 	 * @param Request $request
 	 * @param UserPasswordEncoderInterface $encoder
 	 * @return RedirectResponse|Response
 	 */
-	public function createUser(Request $request, UserPasswordEncoderInterface $encoder)
+	public function addUser(Request $request, UserPasswordEncoderInterface $encoder)
 	{
 		$user = new User();
 		$form = $this->createForm(UserType::class, $user, array('creation' => 1));
@@ -42,7 +42,7 @@ class GestionUser extends AbstractController
 			$entitymanager->flush();
 			$this->addFlash('success', 'Utilisateur Ajouté !');
 
-			return $this->redirectToRoute('main');
+			return $this->redirectToRoute('list-Users');
 		}
 
 		return $this->render('user/add-user.html.twig', array(
@@ -51,7 +51,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user", name="listUsers")
+	 * @Route("/user", name="list-Users")
 	 * @param UserRepository $userRepository
 	 * @return Response
 	 */
@@ -65,7 +65,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/{id}", name="editUser")
+	 * @Route("/user/{id}", name="edit-User")
 	 * @param User|null $user
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager
@@ -95,16 +95,16 @@ class GestionUser extends AbstractController
 			$manager->persist($user);
 			$manager->flush();
 			$this->addFlash('success', 'Utilisateur Modifié avec succès !');
-			return $this->redirectToRoute('editUser', array('id' => $user->getId()));
+			return $this->redirectToRoute('edit-User', array('id' => $user->getId()));
 
 		}
-		return $this->render('user/edit.html.twig', array(
+		return $this->render('user/edit-user.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
 
 	/**
-	 * @Route("/user/delete/{id}", name="deleteUser")
+	 * @Route("/user/delete/{id}", name="delete-User")
 	 * @param User $user
 	 * @param EntityManagerInterface $manager
 	 * @return RedirectResponse
