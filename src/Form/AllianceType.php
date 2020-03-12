@@ -5,6 +5,8 @@ namespace App\Form;
 
 
 use App\Entity\Alliance;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,7 +33,14 @@ class AllianceType extends AbstractType
 						'SE' => 'SE',
 						'NE' => 'SE'
 					),
-				));
+				))
+				->add('user',EntityType::class,[
+					'label' => 'Utilisateurs: ',
+					'class' => User::class,
+					'choice_label' => 'username',
+					'expanded' => true,
+					'multiple' => true,
+				]);
 
 		if ($creation === 1) {
 			$builder
