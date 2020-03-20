@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+    {# retour liste users#}
+    <div class="row justify-content-start">
+        <a href="{{ path('list-Users') }}"><i class="fas fa-angle-left"></i> retour à la liste utilisateurs</a>
+    </div>
+    <br>
+
+    <h2>S'inscrire:</h2>
+
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.roles) }}
+    {{ form_row(form.serveur) }}
+    {{ form_row(form.plainPassword) }}
+    {{ form_row(form.Ajouter) }}
+    {{ form_end(form) }}
+
+{% endblock %}

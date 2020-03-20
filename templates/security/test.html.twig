@@ -1,17 +1,10 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}accueil{% endblock %}
 
 {% block body %}
     <h1>Accueil</h1>
-    <strong>ici il y aura des infos trop bien</strong> <br>
-
-    <a href="{{ path('add-User') }}">Créer un utilisateur</a><br>
-    <a href="{{ path('list-Users') }}"> Voir les utilisateurs</a><br>
-    <a href="{{ path('add-Alliance') }}"> Créer une alliance</a><br>
-    <a href="{{ path('list-Alliances') }}"> Voir les alliances</a><br>
-    <a href="{{ path('add-Serveur') }}"> Créer un serveur</a><br>
-    <a href="{{ path('list-Serveurs') }}"> Voir les serveurs</a><br>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -20,4 +13,23 @@
             </div>
         {% endfor %}
     {% endfor %}
+
+    <strong>ici il y aura des infos trop bien</strong> <br> <br>
+
+    <h5>utilisateurs</h5>
+    <a href="{{ path('list-Users') }}"> Voir les utilisateurs</a><br>
+    <a href="{{ path('list-Alliances') }}"> Voir les groupes</a><br>
+    <a href="{{ path('list-Serveurs') }}"> Voir les serveurs</a><br>
+    <br>
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <h5>Administrateur</h5>
+    <a href="{{ path('admin-list-Users') }}">Gestion des utilisateurs</a><br>
+    <a href="{{ path('admin-List-Serveurs') }}"> Gestion des serveurs</a><br>
+    {% endif %}
+    <br>
+
+    <h5>Juste pour test</h5>
+    <a href="{{ path('reset-password') }}">Mot de passe oublié ?</a>
+
 {% endblock %}

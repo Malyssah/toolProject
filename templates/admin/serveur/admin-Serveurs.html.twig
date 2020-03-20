@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Liste des serveurs{% endblock %}
+
+{% block body %}
+
+    {#si admin#}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Admin - Liste des serveurs</h1>
+        <section class="container">
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <br>
+            {# ajout serveur#}
+            <div class="row justify-content-end">
+                <a href="{{ path('admin-Add-Serveur') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Ajouter
+                    un serveur</a>
+            </div>
+            {# tableau serveur #}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>nom</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for serveur in serveurs %}
+                <tr>
+                    <td>{{ serveur.id }}</td>
+                    <td>{{ serveur.name }}</td>
+                    <td>
+                        <a href="{{ path('admin-Edit-Serveur',{ id:serveur.id }) }}" class="btn btn-success btn-sm"><i
+                                    class="fas fa-pen"></i> Modifier</a>
+                        <a href="{{ path('admin-Delete-Serveur',{ id:serveur.id }) }}" class=" btn btn-danger btn-sm"><i
+                                    class="fas fa-trash"></i> Supprimer</a>
+                    </td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    {% endif %}
+{% endblock %}
+
+

@@ -14,11 +14,16 @@
             {% endfor %}
         {% endfor %}
 
+        <div class="row justify-content-end">
+            <a href="{{ path('add-Alliance') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Ajouter
+                un groupe</a>
+        </div>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>nom</th>
+                <th>serveur</th>
                 <th>cadran</th>
             </tr>
             </thead>
@@ -27,6 +32,7 @@
                 <tr>
                     <td>{{ alliance.id }}</td>
                     <td>{{ alliance.name }}</td>
+                    <td>{{ alliance.serveur }}</td>
                     <td>{{ alliance.cadran }}</td>
                     <td>
                         <a href="{{ path('edit-Alliance',{ id:alliance.id }) }}" class="btn btn-success btn-sm"><i

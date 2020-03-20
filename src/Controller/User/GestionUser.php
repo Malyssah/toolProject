@@ -4,6 +4,7 @@
 namespace App\Controller\User;
 
 
+use App\Entity\ServeurUserPeuple;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -25,11 +26,10 @@ class GestionUser extends AbstractController
 	 */
 	public function usersList(UserRepository $userRepository)
 	{
-
-		$users = $userRepository->findAll();
-		return $this->render('user/users.html.twig', [
-			'users' => $users,
-		]);
+			$users = $userRepository->findAll();
+			return $this->render('user/users.html.twig', [
+				'users' => $users,
+			]);
 	}
 
 	/**
@@ -42,23 +42,44 @@ class GestionUser extends AbstractController
 	public function addUser(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
 	{
 		$user = new User();
+
 		$form = $this->createForm(UserType::class, $user, array('creation' => 1));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var User $user */
 			$user = $form->getData();
+
+			// On récupère le champs serveur qu'on a définit dans le formulaire
+			// On doit passer par un $form->get car c'est un champs qui n'appartient pas
+			// à l'entité userServeurPeuple, c'est un champs non-mappé
+			$serveurs = $form->get("serveur")->getData();
 			$mdpEncoded = $encoder->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($mdpEncoded);
 			$user->eraseCredentials();
+
 			$manager->persist($user);
 			$manager->flush();
+
+
+			// On set les deux attributs serveur et user de l'entité ServeurUserPeuple séparement
+			if ($serveurs) {
+				foreach ($serveurs as $serveur) {
+					// on instancie une nouvelle entité ServeurUserPeuple
+					$serveurUserPeuple = new ServeurUserPeuple();
+					$serveurUserPeuple->setServeur($serveur);
+					$serveurUserPeuple->setUser($user);
+					//On oublie pas de persiste les deux objets créés
+					$manager->persist($serveurUserPeuple);
+					$manager->flush();
+				}
+			}
 			$this->addFlash('success', 'Utilisateur Ajouté !');
 
 			return $this->redirectToRoute('list-Users');
 		}
 
-		return $this->render('user/add-user.html.twig', array(
+		return $this->render('user/add-User.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
@@ -76,20 +97,32 @@ class GestionUser extends AbstractController
 		if (!$user) { //si pas d'utilisateur
 			$user = new User();
 		}
-		$form = $this->createForm(UserType::class, $user, array('creation' => 2));
+		$serveurs = $user->getServeurUserPeuples();
+		$form = $this->createForm(UserType::class, $user, array('creation' => 2,'serveurs'=>$serveurs));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var User $user */
 			$user = $form->getData();
 			$mdpClear = $user->getPlainPassword();
-
+			$serveurs = $form->get("serveur")->getData();
 			if ($mdpClear) {
 				$mdpEncoded = $encoder->encodePassword($user, $mdpClear);
 				$user->setPassword($mdpEncoded);
 				$user->eraseCredentials();
 			}
-
+			// On set les deux attributs serveur et user de l'entité ServeurUserPeuple séparement
+			if ($serveurs) {
+				foreach ($serveurs as $serveur) {
+					// on instancie une nouvelle entité ServeurUserPeuple
+					$serveurUserPeuple = new ServeurUserPeuple();
+					$serveurUserPeuple->setServeur($serveur);
+					$serveurUserPeuple->setUser($user);
+					//On oublie pas de persiste les deux objets créés
+					$manager->persist($serveurUserPeuple);
+					$manager->flush();
+				}
+			}
 
 			$manager->persist($user);
 			$manager->flush();
@@ -97,7 +130,7 @@ class GestionUser extends AbstractController
 			return $this->redirectToRoute('edit-User', array('id' => $user->getId()));
 
 		}
-		return $this->render('user/edit-user.html.twig', array(
+		return $this->render('user/edit-User.html.twig', array(
 			'form' => $form->createView(),
 		));
 	}
@@ -110,9 +143,13 @@ class GestionUser extends AbstractController
 	 */
 	public function deleteUser(User $user, EntityManagerInterface $manager)
 	{
+		//TODO : Suppression de la ligne rattaché à User dans l'entité troupe
+		//supprimer l'utilisateur
 		$manager->remove($user);
+		//execute la requête
 		$manager->flush();
+
 		$this->addFlash('danger', 'Utilisateur supprimé !');
-		return $this->redirectToRoute('main');
+		return $this->redirectToRoute('list-Users');
 	}
 }

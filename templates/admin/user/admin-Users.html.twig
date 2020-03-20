@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des utilisateurs{% endblock %}
+{% block title %}Admin - Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Liste des utilisateurs</h1>
+    <h1>Admin - Gestion des utilisateurs</h1>
     <section class="container">
         <table class="table table-striped">
 
@@ -20,8 +20,10 @@
                 <a href="{{ path('add-User') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Ajouter
                     un utilisateur</a>
             </div>
+
             <thead>
             <tr>
+                <th>ID</th>
                 <th>Pseudo</th>
             </tr>
             </thead>
@@ -29,12 +31,15 @@
             {% for user in users %}
                 <tr>
                     <td>
+                        {{ user.id }}
+                    </td>
+                    <td>
                         {{ user.username }}
                     </td>
                     <td>
-                        <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success btn-sm"><i
-                                    class="fas fa-pen"></i> Modifier</a>
-                        <a href="{{ path('delete-User',{ id:user.id }) }}" class=" btn btn-danger btn-sm"><i
+                      {#  <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success btn-sm"><i
+                                    class="fas fa-pen"></i>Modifier</a>#}
+                        <a href="{{ path('admin-delete-User',{ id:user.id }) }}" class=" btn btn-danger btn-sm"><i
                                     class="fas fa-trash"></i> supprimer</a>
                     </td>
                 </tr>

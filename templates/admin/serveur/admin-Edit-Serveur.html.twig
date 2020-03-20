@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier{% endblock %}
+{% block title %}Admin - Modifier serveur{% endblock %}
 
 {% block body %}
-    <h2>Modifier</h2>
+    {# retour liste users#}
+    <div class="row justify-content-start">
+        <a href="{{ path('admin-List-Serveurs') }}" ><i class="fas fa-angle-left"></i> retour à la liste des serveurs</a>
+    </div>
+    <br>
+    <h2>Admin - Modifier</h2>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -14,10 +19,8 @@
     {% endfor %}
 
     {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.roles) }}
-    {{ form_row(form.plainPassword) }}
+    {{ form_row(form.name) }}
     {{ form_row(form.Modifier) }}
     {{ form_end(form) }}
+
 {% endblock %}

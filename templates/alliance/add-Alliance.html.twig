@@ -3,7 +3,15 @@
 {% block title %}Créer un groupe{% endblock %}
 
 {% block body %}
+    {# retour liste users#}
+    <div class="row justify-content-start">
+        <a href="{{ path('list-Alliances') }}" ><i class="fas fa-angle-left"></i> retour à la liste des groupes</a>
+    </div>
+    <br>
+    <h2>Créer un groupe:</h2>
+
     {{ form_start(form) }}
+    {{ form_row(form.serveur) }}
     {{ form_row(form.name) }}
     {{ form_row(form.cadran) }}
     {{ form_row(form.Enregistrer) }}

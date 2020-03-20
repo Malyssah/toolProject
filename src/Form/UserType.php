@@ -2,7 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Serveur;
+use App\Entity\ServeurUserPeuple;
 use App\Entity\User;
+use App\Repository\ServeurUserPeupleRepository;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,6 +23,7 @@ class UserType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$creation = $options['creation']; //option creation pour l'ajout et edit user
+		$serveurs = $options['serveurs'];
 		$builder
 			->add('email', EmailType::class, array(
 				'label' => 'Email:'
@@ -37,6 +43,28 @@ class UserType extends AbstractType
 				'multiple' => true,
 			))
 		;
+
+
+		if ($serveurs ==  'lol'){// TODO: Cocher par défaut les serveurs rattaché à l'utilisateur
+			$builder
+			->add('serveur', EntityType::class, array(
+				'class'=>Serveur::class,
+				'placeholder'=> 'Choisissez votre serveur:',
+				'data'=>$serveurs->getValues(),
+				'multiple'=>true,
+				'expanded'=>true,
+				'mapped'=>false
+			));
+		}else{
+			$builder
+			->add('serveur', EntityType::class, array(
+				'class'=>Serveur::class,
+				'placeholder'=> 'Choisissez votre serveur:',
+				'multiple'=>true,
+				'expanded'=>true,
+				'mapped'=>false
+			));
+		}
 
 
 		// nouvel utilisateur
@@ -66,6 +94,7 @@ class UserType extends AbstractType
 		$resolver->setDefaults([
 			'data_class' => User::class,
 			'creation' => null,
+			'serveurs'=>null,
 		]);
 	}
 }

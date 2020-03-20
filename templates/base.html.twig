@@ -22,13 +22,15 @@
     <script src="https://kit.fontawesome.com/e5e3515987.js" crossorigin="anonymous"></script>
 
 
-
 <body>
 <div class="row">
-    <a class="navbar-brand" href="{{ path('main') }}"><i class="fab fa-fort-awesome fa-5x"></i> LOGO TROP BEAU <i class="far fa-grin-tongue"></i></a>
-    <a class="navbar-brand col text-right" href="{{ path('app_logout') }}">Déconnexion</a>
+    <a class="navbar-brand" href="{{ path('main') }}"><i class="fab fa-fort-awesome fa-5x"></i> LOGO TROP BEAU <i
+                class="far fa-grin-tongue"></i></a>
+    {#afficher uniquement si connecté#}
+    {% if app.user %}
+        <a class="navbar-brand col text-right" href="{{ path('app_logout') }}">Déconnexion</a>
+    {% endif %}
 </div>
-
 
 <div class="container">
     {% block body %}{% endblock %}

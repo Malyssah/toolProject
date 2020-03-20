@@ -33,6 +33,11 @@ class Alliance
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Serveur", inversedBy="alliances")
+     */
+    private $serveur;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -89,6 +94,18 @@ class Alliance
         if ($this->user->contains($user)) {
             $this->user->removeElement($user);
         }
+
+        return $this;
+    }
+
+    public function getServeur(): ?Serveur
+    {
+        return $this->serveur;
+    }
+
+    public function setServeur(?Serveur $serveur): self
+    {
+        $this->serveur = $serveur;
 
         return $this;
     }

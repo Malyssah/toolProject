@@ -5,6 +5,7 @@ namespace App\Form;
 
 
 use App\Entity\Alliance;
+use App\Entity\Serveur;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,11 @@ class AllianceType extends AbstractType
 		$creation = $options['creation']; //option creation pour l'ajout et edit
 
 			$builder
+				->add('serveur',EntityType::class, array(
+					'label' => 'serveur: ',
+					'placeholder' => 'Sélectionnez votre serveur',
+					'class' => Serveur::class
+				))
 				->add('name', TextType::class, array(
 					'label' => 'Nom: '
 				))
