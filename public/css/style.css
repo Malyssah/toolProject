@@ -1,0 +1,49 @@
+/***
+font-family: 'Roboto', sans-serif;
+font-family: 'Lora', serif;
+
+couleurs travian:
+beige clair: #fff9eb
+beige2: #fcf2d9
+beige3: #ede0c6
+gris Whisper: #E5E5E5 (https://www.htmlcsscolor.com/hex/E5E5E5)
+gris foncé: #2d2d2d
+marron: #7d4634
+bleu clair: #8db1c9
+bleu foncé: #6b9ab8
+vert1: #98cb00
+orange: #da7703
+jaune: #f5b800
+jaune hover: #e99200
+rose: #dc7f60
+
+
+*/
+/* Général */
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* formulaires */
+.card {
+    background-color: #fff9eb;
+}
+
+.titleForm {
+    font-family: 'Lora', serif;
+}
+
+.btnForm {
+    background-color: #da7703;
+    border-color: #da7703;
+    color: white;
+    box-shadow: 0 2px 12px 0 grey;
+    transition: background-color 1s;
+}
+
+.btnForm:hover {
+    background-color: #e99200;
+    border-color: #da7703;
+    color: white;
+    box-shadow: 0 8px 16px 0 grey;
+}
