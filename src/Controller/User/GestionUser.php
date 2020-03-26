@@ -4,6 +4,7 @@
 namespace App\Controller\User;
 
 
+use App\Entity\Serveur;
 use App\Entity\ServeurUserPeuple;
 use App\Entity\User;
 use App\Form\UserType;
@@ -26,10 +27,10 @@ class GestionUser extends AbstractController
 	 */
 	public function usersList(UserRepository $userRepository)
 	{
-			$users = $userRepository->findAll();
-			return $this->render('user/users.html.twig', [
-				'users' => $users,
-			]);
+		$users = $userRepository->findAll();
+		return $this->render('user/users.html.twig', [
+			'users' => $users,
+		]);
 	}
 
 	/**
@@ -98,7 +99,7 @@ class GestionUser extends AbstractController
 			$user = new User();
 		}
 		$serveurs = $user->getServeurUserPeuples();
-		$form = $this->createForm(UserType::class, $user, array('creation' => 2,'serveurs'=>$serveurs));
+		$form = $this->createForm(UserType::class, $user, array('creation' => 2, 'serveurs' => $serveurs));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -111,12 +112,76 @@ class GestionUser extends AbstractController
 				$user->setPassword($mdpEncoded);
 				$user->eraseCredentials();
 			}
-			// On set les deux attributs serveur et user de l'entité ServeurUserPeuple séparement
-			if ($serveurs) {
-				foreach ($serveurs as $serveur) {
+			/** On récupère les anciens serveurs en BDD et les nouveaux cochés
+			 *    On en fait un tableau de chaque avec l'id du serveur en index et le peuple en valeur
+			 *    pour l'un et le nom du serveur pour mieux se repéré pour l'autre
+			 */
+			$oldsServeurUserPeuple = $user->getServeurUserPeuples()->getValues();
+			foreach ($oldsServeurUserPeuple as $value) {
+				$oldServeur [$value->getServeur()->getId()] = $value->getPeuple();
+			}
+			foreach ($serveurs as $serveur) {
+				$idServeurs [$serveur->getId()] = $serveur->getName();
+			}
+
+			/** Traitement des anciens serveurs cochés*/
+
+			$sameServeurs = array_intersect_key($idServeurs, $oldServeur);
+			/** Si il y a des serveurs qui sont restés cochés on les parcours
+			 * et on récupère leur id dans un tableau
+			 */
+			if ($sameServeurs) {
+				while (current($sameServeurs)) {
+					$idOldServeurs[] = key($sameServeurs);
+					next($sameServeurs);
+				}
+			}
+			$setOldServeurs = $this->getDoctrine()->getRepository(ServeurUserPeuple::class)->findBy(['serveur' => $idOldServeurs, 'user' => $user]);
+
+			/** On va chercher les anciens serveur puis on les supprimes de la table */
+			$serveursRemove = $this->getDoctrine()->getRepository(ServeurUserPeuple::class)->findBy(['user' => $user]);
+			foreach ($serveursRemove as $serveurRemove) {
+				$em = $this->getDoctrine()->getManager();
+				$em->remove($serveurRemove);
+				$em->flush();
+			}
+
+			/** On parcours les ancien serveurs encore chochés et on les set avec
+			 * l'attribut Peuple si il a été renseigné si non il sera set a null*/
+			if ($setOldServeurs) {
+				foreach ($setOldServeurs as $setOldServeur) {
 					// on instancie une nouvelle entité ServeurUserPeuple
 					$serveurUserPeuple = new ServeurUserPeuple();
-					$serveurUserPeuple->setServeur($serveur);
+					$serveurUserPeuple->setServeur($setOldServeur->getServeur());
+					$serveurUserPeuple->setUser($user);
+					if ($setOldServeur->getPeuple()) {
+						$serveurUserPeuple->setPeuple($setOldServeur->getPeuple());
+					}
+					//On oublie pas de persiste les deux objets créés
+					$manager->persist($serveurUserPeuple);
+					$manager->flush();
+				}
+			}
+
+			/** Traitement des nouveaux serveur cochés */
+			$newServeurs = array_diff_key($idServeurs, $oldServeur);
+			/** Si on détect des nouveaux serveur on les parcours
+			 * et on enregistre leur id dans un tableau
+			 */
+			if ($newServeurs) {
+				while (current($newServeurs)) {
+					$idNewServeurs[] = [key($newServeurs)];
+					next($newServeurs);
+				}
+			}
+			/** on enregistre les nouveaux serveurs en bdd
+			 * Pas de notion de peuple ici
+			 */
+			$setNewServeurs = $this->getDoctrine()->getRepository(Serveur::class)->findBy(['id' => $idNewServeurs]);
+			if ($setNewServeurs) {
+				foreach ($setNewServeurs as $setNewServeur) {
+					$serveurUserPeuple = new ServeurUserPeuple();
+					$serveurUserPeuple->setServeur($setNewServeur);
 					$serveurUserPeuple->setUser($user);
 					//On oublie pas de persiste les deux objets créés
 					$manager->persist($serveurUserPeuple);
@@ -124,6 +189,7 @@ class GestionUser extends AbstractController
 				}
 			}
 
+			/** On persist et flush ici l'objet user */
 			$manager->persist($user);
 			$manager->flush();
 			$this->addFlash('success', 'Utilisateur Modifié avec succès !');
@@ -143,7 +209,7 @@ class GestionUser extends AbstractController
 	 */
 	public function deleteUser(User $user, EntityManagerInterface $manager)
 	{
-		//TODO : Suppression de la ligne rattaché à User dans l'entité troupe
+
 		//supprimer l'utilisateur
 		$manager->remove($user);
 		//execute la requête

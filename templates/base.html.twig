@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
     {# import bootstrap css / js #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -20,7 +19,13 @@
 
     {# import fontawesome #}
     <script src="https://kit.fontawesome.com/e5e3515987.js" crossorigin="anonymous"></script>
+    {#import google Font#}
+    <link href="https://fonts.googleapis.com/css?family=Lora|Roboto&display=swap" rel="stylesheet">
 
+    {#style css#}
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+
+    {% block stylesheets %}{% endblock %}
 
 <body>
 <div class="row">
@@ -35,6 +40,7 @@
 <div class="container">
     {% block body %}{% endblock %}
 </div>
+
 {% block javascripts %}{% endblock %}
 </body>
 </html>

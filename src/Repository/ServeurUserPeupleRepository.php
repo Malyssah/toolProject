@@ -19,6 +19,11 @@ class ServeurUserPeupleRepository extends ServiceEntityRepository
         parent::__construct($registry, ServeurUserPeuple::class);
     }
 
+    public function listServeurByIdUser($idUser){
+    	$querybuilder = $this->createQueryBuilder('su');
+
+	}
+
     // /**
     //  * @return ServeurUserPeuple[] Returns an array of ServeurUserPeuple objects
     //  */

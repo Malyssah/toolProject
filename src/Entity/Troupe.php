@@ -57,7 +57,7 @@ class Troupe
     private $teuton;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="troupes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="troupes", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $users;

@@ -3,11 +3,30 @@
 {% block title %}Admin - Créer un serveur{% endblock %}
 
 {% block body %}
+    <section class="d-flex justify-content-center">
+        <div class="card col-5">
+            <div class="card-body">
 
-    <h2>Admin - Créer un serveur:</h2>
+                <h3 class="card-title titleForm" style="text-align: center;">Créer un serveur</h3>
+                <br>
 
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.Ajouter) }}
-    {{ form_end(form) }}
+                {{ form_start(form) }}
+
+                <div class="form-group">
+                    {{ form_label(form.name) }}
+                    {{ form_errors(form.name) }}
+                    {{ form_widget(form.name) }}
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-lg btnForm btn-lg btn-block" type="submit">Ajouter</button>
+
+{#                    {{ form_row(form.Ajouter) }}#}
+
+                </div>
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </section>
 {% endblock %}

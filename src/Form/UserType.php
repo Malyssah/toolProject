@@ -3,17 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Serveur;
-use App\Entity\ServeurUserPeuple;
 use App\Entity\User;
-use App\Repository\ServeurUserPeupleRepository;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,13 +22,13 @@ class UserType extends AbstractType
 		$serveurs = $options['serveurs'];
 		$builder
 			->add('email', EmailType::class, array(
-				'label' => 'Email:'
+				'label' => 'Email: '
 			))
 			->add('username', TextType::class, array(
-				'label' => 'Pseudo:'
+				'label' => 'Pseudo: '
 			))
 			->add('roles', ChoiceType::class, array(
-				'label' => 'Roles:',
+				'label' => 'Rôles: ',
 				'placeholder' => 'Sélectionnez un rôle',
 				'choices' => array(
 					'Admin ' => 'ROLE_ADMIN',
@@ -49,7 +45,7 @@ class UserType extends AbstractType
 			$builder
 			->add('serveur', EntityType::class, array(
 				'class'=>Serveur::class,
-				'placeholder'=> 'Choisissez votre serveur:',
+				'placeholder'=> 'Choisissez votre serveur: ',
 				'data'=>$serveurs->getValues(),
 				'multiple'=>true,
 				'expanded'=>true,
@@ -59,7 +55,7 @@ class UserType extends AbstractType
 			$builder
 			->add('serveur', EntityType::class, array(
 				'class'=>Serveur::class,
-				'placeholder'=> 'Choisissez votre serveur:',
+				'placeholder'=> 'Choisissez votre serveur: ',
 				'multiple'=>true,
 				'expanded'=>true,
 				'mapped'=>false
@@ -74,8 +70,8 @@ class UserType extends AbstractType
 					'invalid_message' => 'Les mots de passe ne sont pas identiques',
 					'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
 					'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
-					'required' => true))
-				->add('Ajouter', SubmitType::class);
+					'required' => true));
+//				->add('Ajouter', SubmitType::class);
 
 			// édit utilisateur
 		} elseif ($creation === 2) {
@@ -84,8 +80,8 @@ class UserType extends AbstractType
 					'invalid_message' => 'Les mots de passe ne sont pas identiques',
 					'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
 					'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
-					'required' => false))
-				->add('Modifier', SubmitType::class);
+					'required' => false));
+//				->add('Modifier', SubmitType::class);
 		}
 	}
 

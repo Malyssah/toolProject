@@ -3,20 +3,26 @@
 {% block title %}Modifier serveur{% endblock %}
 
 {% block body %}
-    <h2>Modifier</h2>
 
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert-{{ label }}">
-                {{ message }}
+    <section class="d-flex justify-content-center">
+        <div class="card col-5">
+            <div class="card-body">
+
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                <h3 class="card-title titleForm" style="text-align: center;"> Modifier serveur?</h3>
+                {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.Modifier) }}
+                {{ form_end(form) }}
             </div>
-        {% endfor %}
-    {% endfor %}
-
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.Modifier) }}
-    {{ form_end(form) }}
-
+        </div>
+    </section>
 {% endblock %}
 

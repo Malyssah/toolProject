@@ -46,7 +46,6 @@ class AdminGestionUser extends AbstractController
 	 */
 	public function AdminDeleteUser(User $user, EntityManagerInterface $manager)
 	{
-		//TODO : Suppression de la ligne rattaché à User dans l'entité troupe
 		$manager->remove($user);
 		$manager->flush();
 		$this->addFlash('danger', 'Utilisateur supprimé !');

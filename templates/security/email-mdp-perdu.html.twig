@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOOLPROJECT - Mot de passe oublié</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <h1 style="color: #007bff; text-align: center;"><a href="#" style="text-decoration: none">TABLEO</a></h1>
+
+    <h2>Bonjour, {{ user.username }}</h2>
+        <p>Vous recevez ce mail parce que vous avez effectué une demande de mot de passe oublié.</p>
+        <p>Si ce n'est pas le cas, nous vous invitons à ignorer ce mail et rester attentif qu'une autre demande inopinée
+            ne se présente.
+            Si une nouvelle demande est effectuée sans votre accord, nous vous invitons à contacter votre
+            administrateur, quelqu'un essaie peut être d'accéder à votre compte.</p>
+        <hr>
+    <h4>Sinon nous vous invitons à suivre la démarche ci-dessous</h4>
+        <span style="text-align: center">------</span>
+    <h3>Cliquez sur le lien suivant afin de réinitialiser votre mot de passe :</h3>
+
+    <!-- revoir pour le lien et penser à donner les memes noms sur la fonction -->
+    <h3>
+        http://localhost:8000/new-password?id={{ user.id }}&token={{ token }}
+
+        {#<a href="http://localhost:8000/new-password?id={{ user.id }}&token={{ token }}"
+            class="btn btnForm">Modifier votre mot de passe</a>#}
+    </h3>
+
+</body>
+</html>

@@ -97,7 +97,7 @@ class AdminGestionServeur extends AbstractController
 	 */
 	public function deleteServeur(Serveur $serveur, EntityManagerInterface $manager)
 	{
-		//TODO : Suppression de la ligne rattaché Serveur dans l'entité troupe
+		//cascade sur troupe
 		$manager->remove($serveur);
 		$manager->flush();
 		$this->addFlash('danger', 'serveur supprimé !');

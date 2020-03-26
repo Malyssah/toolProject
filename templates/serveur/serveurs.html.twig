@@ -4,28 +4,29 @@
 
 {% block body %}
 
+    <a href="{{ path('edit-User', {id:app.user.id}) }}"> Voir les serveurs</a><br>
 
     {% if is_granted('ROLE_USER') %}
-    <section class="container">
+        <section class="container">
 
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-
-        <h4>Choisissez votre serveur: </h4>
-
-        <div class="container">
-            <select name="serveur" class="form-control Serveur::class">
-                {% for serveur in serveurs %}
-                    <option value="{{ serveur.name }}">{{ serveur.name }}</option>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert-{{ label }}">
+                        {{ message }}
+                    </div>
                 {% endfor %}
-            </select>
-        </div>
-    </section>
+            {% endfor %}
+
+            <h4>Choisissez votre serveur: </h4>
+
+            <div class="container">
+                <select name="serveur" class="form-control Serveur::class">
+                    {% for serveur in serveurs %}
+                        <option value="{{ serveur.name }}">{{ serveur.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </section>
     {% endif %}
 {% endblock %}
 

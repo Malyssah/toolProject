@@ -11,8 +11,26 @@
         {% endfor %}
     {% endfor %}
 
+    {{ form_start(form) }}
+
+    <section class="container">
+        {% if form.imperian is defined and form.caesaris is defined %}
+            {{ form_row(form.imperian) }}
+            {{ form_row(form.caesaris) }}
+        {% endif %}
+        {% if form.phalange is defined and form.druide is defined %}
+            {{ form_row(form.phalange) }}
+            {{ form_row(form.druide) }}
+        {% endif %}
+        {% if form.gourdin is defined and form.teuton is defined %}
+            {{ form_row(form.gourdin) }}
+            {{ form_row(form.teuton) }}
+        {% endif %}
+        {{ form_row(form.belier) }}
+        {{ form_row(form.catapulte) }}
+        {{ form_row(form.Enregistrer) }}
+    </section>
+{{ form_end(form) }}
 
 
-
-
-{% endblock %}
+{% endblock %}}
