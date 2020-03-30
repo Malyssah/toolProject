@@ -86,7 +86,7 @@ class GestionUser extends AbstractController
 	}
 
 	/**
-	 * @Route("/user/{id}", name="edit-User")
+	 * @Route("/user/{idServeur}/{id}", name="edit-User")
 	 * @param User|null $user
 	 * @param Request $request
 	 * @param EntityManagerInterface $manager

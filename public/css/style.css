@@ -21,9 +21,14 @@ rose: #dc7f60
 */
 /* Général */
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif
 }
-
+body{
+/*    background-image:url(../img/fond.jpg);
+    background-size: cover;
+    background-attachment:fixed;
+    background-repeat:no-repeat;*/
+}
 /* formulaires */
 .card {
     background-color: #fff9eb;

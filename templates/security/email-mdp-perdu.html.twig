@@ -31,12 +31,9 @@
         <span style="text-align: center">------</span>
     <h3>Cliquez sur le lien suivant afin de réinitialiser votre mot de passe :</h3>
 
-    <!-- revoir pour le lien et penser à donner les memes noms sur la fonction -->
     <h3>
-        http://localhost:8000/new-password?id={{ user.id }}&token={{ token }}
-
-        {#<a href="http://localhost:8000/new-password?id={{ user.id }}&token={{ token }}"
-            class="btn btnForm">Modifier votre mot de passe</a>#}
+        <a href="http://localhost:8000/new-password?id={{ user.id }}&token={{ token }}"
+            class="btn btnForm">Modifier votre mot de passe</a>
     </h3>
 
 </body>

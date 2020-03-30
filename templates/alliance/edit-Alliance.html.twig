@@ -5,23 +5,45 @@
 {% block body %}
     {# retour liste users#}
     <div class="row justify-content-start">
-        <a href="{{ path('list-Alliances') }}" ><i class="fas fa-angle-left"></i> retour à la liste des groupes</a>
+        <a href="{{ path('list-Alliances') }}"><i class="fas fa-angle-left"></i> retour à la liste des groupes</a>
     </div>
     <br>
-    <h2>Modifier</h2>
 
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert-{{ label }}">
-                {{ message }}
+    <section class="d-flex justify-content-center">
+        <div class="card col-5 shadow p-3 mb-5 rounded">
+            <div class="card-body">
+
+                <h3 class="card-title titleForm">Modifier</h3>
+
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {{ form_start(form) }}
+
+                <div class="form-group">
+                    {{ form_row(form.serveur) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_row(form.name) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_row(form.cadran) }}
+                </div>
+
+                <div class="text-center">
+                    {{ form_row(form.Modifier, {'attr': {'class':'btn btn-lg btnForm btn-lg btn-block'}}) }}
+                </div>
+
+                {{ form_end(form) }}
+
             </div>
-        {% endfor %}
-    {% endfor %}
-
-    {{ form_start(form)}}
-    {{ form_row(form.serveur) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.cadran) }}
-    {{ form_row(form.Modifier) }}
-    {{ form_end(form) }}
+        </div>
+    </section>
 {% endblock %}
