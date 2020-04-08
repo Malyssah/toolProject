@@ -1,0 +1,28 @@
+
+{#<header>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+
+            <a class="navbar-brand text-white" href="{{ path('main') }}">tool<span class="orange">Project</span></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbars">
+                <ul class="navbar-nav ml-auto">
+                    #}{#afficher uniquement si connecté#}{#
+                    {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('edit-User', {id:app.user.id}) }}">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+    </nav>
+</header>#}
+
+
+

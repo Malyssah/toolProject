@@ -30,6 +30,7 @@ class AdminGestionServeur extends AbstractController
 			return $this->render('admin/serveur/admin-Serveurs.html.twig', [
 				'serveurs' => $serveurs,
 			]);
+
 		}else{
 			$this->addFlash('danger', 'page reservé admin!');
 			return $this->redirectToRoute('main');

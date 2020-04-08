@@ -11,7 +11,7 @@ class Test extends AbstractController
 {
 
 	/**
-	 * @Route("/",name="main")
+	 * @Route("/test",name="test-page")
 	 */
 	public function main()
 	{

@@ -4,12 +4,11 @@
 
 {% block body %}
 
-    {#retour liste users#}
-    <div class="row justify-content-start">
-        <a href="{{ path('list-Users') }}"><i class="fas fa-angle-left"></i> retour à la liste</a>
-    </div>
-    <br>
     <section class="d-flex justify-content-center">
+        {#retour liste users#}
+        <div class="col-1">
+            <a href="{{ path('list-Users') }}"><i class="fas fa-angle-left"></i> retour à la liste</a>
+        </div>
         <div class="card col-5 shadow p-3 mb-5 rounded">
             <div class="card-body">
 
@@ -26,7 +25,6 @@
 
                 {{ form_start(form) }}
 
-
                 <div class="form-group">
                     {{ form_label(form.email) }}
                     {{ form_errors(form.email) }}
@@ -40,16 +38,19 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_row(form.roles, {label_attr: {class: 'checkbox-custom'}}) }}
-                </div>
-
-                <div class="form-group">
                     {{ form_row(form.serveur, {label_attr: {class: 'checkbox-custom'}}) }}
                 </div>
 
                 <div class="form-group">
                     {{ form_row(form.plainPassword, {'attr' : {'class' : 'mb-3'}}) }}
                 </div>
+
+                {# uniquement pour l'admin #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="form-group">
+                        {{ form_row(form.roles, {label_attr: {class: 'checkbox-custom'}}) }}
+                    </div>
+                {% endif %}
 
                 <div class="text-center">
                     <button class="btn btn-lg btnForm btn-lg btn-block" type="submit">Modifier</button>

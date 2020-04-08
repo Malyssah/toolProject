@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil ToolProject{% endblock %}
+
+{% block body %}
+
+    <main class="page-content">
+
+    <div class="container-fluid">
+
+        {% if serveurs %}
+
+            <h1 style="margin-bottom: 90px">{{ serveurs.name }}</h1>
+            <hr>
+
+
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Utilisateurs</h3>
+               {% for serveur in serveurs %}
+              <li>{{ username.serveurs.user }}</li>
+               {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>Alliances</h3>
+{#                {% for alliance in alliances %}#}
+                   <li>#dddddddd</li>
+{#                {% endfor %}#}
+            </div>
+
+            <div class="col-md-4">
+                <h3>Troupes</h3>
+{#                {% for serveur in serveurs %}#}
+                    <li>#ddddddddddd</li>
+{#                {% endfor %}#}
+            </div>
+        </div>
+
+            {#Pas de serveur#}
+        {% else %}
+            <h2 class="text-danger">
+                Vous n'êtes rattaché à aucun serveur
+                <a href="{{ path('edit-User',{id:app.user.id}) }}">En choisir un</a>
+            </h2>
+        {% endif %}
+
+    </div>
+{% endblock %}

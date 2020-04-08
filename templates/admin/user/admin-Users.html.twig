@@ -3,8 +3,11 @@
 {% block title %}Admin - Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Admin - Gestion des utilisateurs</h1>
-    <section class="container">
+
+
+
+    <section class="container ">
+        <h1>Admin - Gestion des utilisateurs</h1>
         <table class="table table-striped">
 
             {% for label, messages in app.flashes %}
@@ -17,30 +20,31 @@
 
             {# ajout utilisateur#}
             <div class="row justify-content-end">
-                <a href="{{ path('add-User') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Ajouter
-                    un utilisateur</a>
+                <a href="{{ path('add-User') }}" class="btn btnForm btn-sm"><i class="fas fa-plus"></i> Ajouter un
+                    utilisateur</a>
             </div>
-
-            <thead>
+            <br>
+            <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Pseudo</th>
+                <th>Pseudos</th>
+                <th>Emails</th>
+                <th>Serveurs</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for user in users %}
                 <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.serveur }}</td>
                     <td>
-                        {{ user.id }}
-                    </td>
-                    <td>
-                        {{ user.username }}
-                    </td>
-                    <td>
-                      {#  <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success btn-sm"><i
-                                    class="fas fa-pen"></i>Modifier</a>#}
-                        <a href="{{ path('admin-delete-User',{ id:user.id }) }}" class=" btn btn-danger btn-sm"><i
-                                    class="fas fa-trash"></i> supprimer</a>
+                        <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success">
+                            <i class="fas fa-pen"></i> Modifier</a>
+                        <a href="{{ path('admin-delete-User',{ id:user.id }) }}" class=" btn btn-danger">
+                            <i class="fas fa-trash"> Supprimer</i></a>
                     </td>
                 </tr>
             {% endfor %}

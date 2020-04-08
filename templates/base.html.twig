@@ -1,8 +1,13 @@
+{#contient tous les éléments communs aux pages du site#}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}Welcome!{% endblock %}</title>
+
     {# import bootstrap css / js #}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -20,27 +25,21 @@
     {# import fontawesome #}
     <script src="https://kit.fontawesome.com/e5e3515987.js" crossorigin="anonymous"></script>
     {#import google Font#}
-    <link href="https://fonts.googleapis.com/css?family=Lora|Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
 
     {#style css#}
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 
     {% block stylesheets %}{% endblock %}
 
-<body>
-<div class="row">
-    <a class="navbar-brand" href="{{ path('main') }}"><i class="fab fa-fort-awesome fa-5x"></i> LOGO TROP BEAU <i
-                class="far fa-grin-tongue"></i></a>
-    {#afficher uniquement si connecté#}
-    {% if app.user %}
-        <a class="navbar-brand col text-right" href="{{ path('app_logout') }}">Déconnexion</a>
-    {% endif %}
-</div>
+    {% include 'includes/header.html.twig' %}
 
-<div class="container">
+    {% include 'includes/sideBar.html.twig' %}
+
     {% block body %}{% endblock %}
-</div>
 
-{% block javascripts %}{% endblock %}
-</body>
+    {% include 'includes/footer.html.twig' %}
+
+    {% block javascripts %}{% endblock %}
+
 </html>

@@ -3,13 +3,12 @@
 {% block title %}Admin - Modifier serveur{% endblock %}
 
 {% block body %}
-    {# retour liste users#}
-    <div class="row justify-content-start">
-        <a href="{{ path('admin-List-Serveurs') }}"><i class="fas fa-angle-left"></i> retour à la liste des
-            serveurs</a>
-    </div>
-
     <section class="d-flex justify-content-center">
+        {# retour liste users#}
+        <div class="col-1">
+            <a href="{{ path('admin-List-Serveurs') }}"><i class="fas fa-angle-left"></i> retour à la liste des
+                serveurs</a>
+        </div>
         <div class="card col-5">
             <div class="card-body">
 
@@ -21,6 +20,7 @@
                     {% endfor %}
                 {% endfor %}
 
+                {# retour liste users#}
                 <h3 class="card-title titleForm" style="text-align: center;">Modifier le serveur ?</h3>
                 <br>
 

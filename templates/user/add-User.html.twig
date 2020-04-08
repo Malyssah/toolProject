@@ -31,10 +31,6 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_row(form.roles, {label_attr: {class: 'checkbox-custom'}}) }}
-                </div>
-
-                <div class="form-group">
                     {{ form_row(form.serveur, {label_attr: {class: 'checkbox-custom'}}) }}
                 </div>
 
@@ -42,15 +38,22 @@
                     {{ form_row(form.plainPassword, {'attr' : {'class' : 'mb-3'}}) }}
                 </div>
 
+                {# uniquement pour un utilisateur ayant le role admin #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="form-group">
+                        {{ form_row(form.roles, {label_attr: {class: 'checkbox-custom'}}) }}
+                    </div>
+                {% endif %}
+
                 <div class="text-center">
                     <button class="btn btn-lg btnForm btn-lg btn-block" type="submit">Ajouter</button>
                 </div>
+                {{ form_end(form) }}
                 <br>
                 <div class="form-group">
                     <a href="{{ path('app_login') }}">Déjà un compte? connectez vous</a>
                 </div>
 
-                {{ form_end(form) }}
             </div>
         </div>
     </section>

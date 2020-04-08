@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,6 +28,7 @@ class User implements UserInterface
 
 	/**
 	 * @ORM\Column(type="json")
+	 * @IsGranted("ROLE_ADMIN")
 	 */
 	private $roles = [];
 
@@ -54,11 +56,6 @@ class User implements UserInterface
 	private $alliance;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="App\Entity\ServeurUserPeuple", mappedBy="user", cascade={"remove"})
-	 */
-	private $serveurUserPeuples;
-
-	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Troupe", mappedBy="users")
 	 */
 	private $troupes;
@@ -68,30 +65,36 @@ class User implements UserInterface
 	 */
 	private $lostPasswords;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Serveur", inversedBy="users")
+	 * @ORM\JoinColumn(name="serveur_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $serveur;
+
 	public function __construct()
-	{
-		$this->alliance = new ArrayCollection();
-		$this->serveurUserPeuples = new ArrayCollection();
-		$this->troupes = new ArrayCollection();
-		$this->lostPasswords = new ArrayCollection();
-	}
+         	{
+         		$this->alliance = new ArrayCollection();
+         		$this->troupes = new ArrayCollection();
+         		$this->lostPasswords = new ArrayCollection();
+         
+         	}
 
 	public function getId(): ?int
-	{
-		return $this->id;
-	}
+         	{
+         		return $this->id;
+         	}
 
 	public function getEmail(): ?string
-	{
-		return $this->email;
-	}
+         	{
+         		return $this->email;
+         	}
 
 	public function setEmail(string $email): self
-	{
-		$this->email = $email;
-
-		return $this;
-	}
+         	{
+         		$this->email = $email;
+         
+         		return $this;
+         	}
 
 	/**
 	 * A visual identifier that represents this user.
@@ -99,202 +102,178 @@ class User implements UserInterface
 	 * @see UserInterface
 	 */
 	public function getUsername(): string
-	{
-		return (string)$this->username;
-	}
+         	{
+         		return (string)$this->username;
+         	}
 
 	/**
 	 * @see UserInterface
 	 */
 	public function getRoles(): array
-	{
-		$roles = $this->roles;
-		// guarantee every user at least has ROLE_USER
-		$roles[] = 'ROLE_USER';
-
-		return array_unique($roles);
-	}
+         	{
+         		$roles = $this->roles;
+         		// guarantee every user at least has ROLE_USER
+         		$roles[] = 'ROLE_USER';
+         
+         		return array_unique($roles);
+         	}
 
 	public function setRoles(array $roles): self
-	{
-		$this->roles = $roles;
-
-		return $this;
-	}
+         	{
+         		$this->roles = $roles;
+         
+         		return $this;
+         	}
 
 	/**
 	 * @see UserInterface
 	 */
 	public function getPassword(): string
-	{
-		return (string)$this->password;
-	}
+         	{
+         		return (string)$this->password;
+         	}
 
 	public function setPassword(string $password): self
-	{
-		$this->password = $password;
-
-		return $this;
-	}
+         	{
+         		$this->password = $password;
+         
+         		return $this;
+         	}
 
 	public function getPlainPassword(): ?string
-	{
-		return $this->plainPassword;
-	}
+         	{
+         		return $this->plainPassword;
+         	}
 
 	public function setPlainPassword(string $plainPassword): self
-	{
-		$this->plainPassword = $plainPassword;
-		return $this;
-	}
+         	{
+         		$this->plainPassword = $plainPassword;
+         		return $this;
+         	}
 
 	/**
 	 * @see UserInterface
 	 */
 	public function getSalt()
-	{
-		// not needed when using the "bcrypt" algorithm in security.yaml
-	}
+         	{
+         		// not needed when using the "bcrypt" algorithm in security.yaml
+         	}
 
 	/**
 	 * @see UserInterface
 	 */
 	public function eraseCredentials()
-	{
-		// If you store any temporary, sensitive data on the user, clear it here
-		$this->plainPassword = null;
-	}
+         	{
+         		// If you store any temporary, sensitive data on the user, clear it here
+         		$this->plainPassword = null;
+         	}
 
 	public function setUsername(?string $username): self
-	{
-		$this->username = $username;
-
-		return $this;
-	}
+         	{
+         		$this->username = $username;
+         
+         		return $this;
+         	}
 
 	/**
 	 * @return Collection|Alliance[]
 	 */
 	public function getAlliance(): Collection
-	{
-		return $this->alliance;
-	}
+         	{
+         		return $this->alliance;
+         	}
 
 	public function addAlliance(Alliance $alliance): self
-	{
-		if (!$this->alliance->contains($alliance)) {
-			$this->alliance[] = $alliance;
-			$alliance->addUser($this);
-		}
-
-		return $this;
-	}
+         	{
+         		if (!$this->alliance->contains($alliance)) {
+         			$this->alliance[] = $alliance;
+         			$alliance->addUser($this);
+         		}
+         
+         		return $this;
+         	}
 
 	public function removeAlliance(Alliance $alliance): self
-	{
-		if ($this->alliance->contains($alliance)) {
-			$this->alliance->removeElement($alliance);
-			$alliance->removeUser($this);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @return Collection|ServeurUserPeuple[]
-	 */
-	public function getServeurUserPeuples(): Collection
-	{
-		return $this->serveurUserPeuples;
-	}
-
-	public function addServeurUserPeuple(ServeurUserPeuple $serveurUserPeuple): self
-	{
-		if (!$this->serveurUserPeuples->contains($serveurUserPeuple)) {
-			$this->serveurUserPeuples[] = $serveurUserPeuple;
-			$serveurUserPeuple->setUser($this);
-		}
-
-		return $this;
-	}
-
-	public function removeServeurUserPeuple(ServeurUserPeuple $serveurUserPeuple): self
-	{
-		if ($this->serveurUserPeuples->contains($serveurUserPeuple)) {
-			$this->serveurUserPeuples->removeElement($serveurUserPeuple);
-			// set the owning side to null (unless already changed)
-			if ($serveurUserPeuple->getUser() === $this) {
-				$serveurUserPeuple->setUser(null);
-			}
-		}
-
-		return $this;
-	}
+         	{
+         		if ($this->alliance->contains($alliance)) {
+         			$this->alliance->removeElement($alliance);
+         			$alliance->removeUser($this);
+         		}
+         
+         		return $this;
+         	}
 
 	/**
 	 * @return Collection|Troupe[]
 	 */
 	public function getTroupes(): Collection
-	{
-		return $this->troupes;
-	}
+         	{
+         		return $this->troupes;
+         	}
 
 	public function addTroupe(Troupe $troupe): self
-	{
-		if (!$this->troupes->contains($troupe)) {
-			$this->troupes[] = $troupe;
-			$troupe->setUsers($this);
-		}
-
-		return $this;
-	}
+         	{
+         		if (!$this->troupes->contains($troupe)) {
+         			$this->troupes[] = $troupe;
+         			$troupe->setUsers($this);
+         		}
+         
+         		return $this;
+         	}
 
 	public function removeTroupe(Troupe $troupe): self
-	{
-		if ($this->troupes->contains($troupe)) {
-			$this->troupes->removeElement($troupe);
-			// set the owning side to null (unless already changed)
-			if ($troupe->getUsers() === $this) {
-				$troupe->setUsers(null);
-			}
-		}
-
-		return $this;
-	}
+         	{
+         		if ($this->troupes->contains($troupe)) {
+         			$this->troupes->removeElement($troupe);
+         			// set the owning side to null (unless already changed)
+         			if ($troupe->getUsers() === $this) {
+         				$troupe->setUsers(null);
+         			}
+         		}
+         
+         		return $this;
+         	}
 
 	/**
 	 * @return Collection|LostPassword[]
 	 */
 	public function getLostPasswords(): Collection
-	{
-		return $this->lostPasswords;
-	}
+         	{
+         		return $this->lostPasswords;
+         	}
 
 	public function addLostPassword(LostPassword $lostPassword): self
-	{
-		if (!$this->lostPasswords->contains($lostPassword)) {
-			$this->lostPasswords[] = $lostPassword;
-			$lostPassword->setUser($this);
-		}
-
-		return $this;
-	}
+         	{
+         		if (!$this->lostPasswords->contains($lostPassword)) {
+         			$this->lostPasswords[] = $lostPassword;
+         			$lostPassword->setUser($this);
+         		}
+         
+         		return $this;
+         	}
 
 	public function removeLostPassword(LostPassword $lostPassword): self
-	{
-		if ($this->lostPasswords->contains($lostPassword)) {
-			$this->lostPasswords->removeElement($lostPassword);
-			// set the owning side to null (unless already changed)
-			if ($lostPassword->getUser() === $this) {
-				$lostPassword->setUser(null);
-			}
-		}
+         	{
+         		if ($this->lostPasswords->contains($lostPassword)) {
+         			$this->lostPasswords->removeElement($lostPassword);
+         			// set the owning side to null (unless already changed)
+         			if ($lostPassword->getUser() === $this) {
+         				$lostPassword->setUser(null);
+         			}
+         		}
+         
+         		return $this;
+         	}
 
-		return $this;
-	}
+    public function getServeur(): ?Serveur
+    {
+        return $this->serveur;
+    }
 
-	public function getToken()
-	{
-	}
+    public function setServeur(?Serveur $serveur): self
+    {
+        $this->serveur = $serveur;
 
+        return $this;
+    }
 }

@@ -3,10 +3,10 @@
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Liste des utilisateurs</h1>
+
     <section class="container">
         <table class="table table-striped">
-
+            <h1 class="titleForm">Liste des utilisateurs</h1>
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert-{{ label }}">
@@ -15,31 +15,24 @@
                 {% endfor %}
             {% endfor %}
 
-            {# ajout utilisateur#}
-            <div class="row justify-content-end">
-                <a href="{{ path('add-User') }}" class="btn btnForm btn-sm"><i class="fas fa-plus"></i> Ajouter
-                    un utilisateur</a>
-            </div>
-            <thead>
-            <tr>
-                <th>Pseudo</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
+            <table class="table table-striped">
+                <thead class="thead-dark">
                 <tr>
-                    <td>
-                        {{ user.username }}
-                    </td>
-                    <td>
-                        <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success btn-sm"><i
-                                    class="fas fa-pen"></i> Modifier</a>
-                        <a href="{{ path('delete-User',{ id:user.id }) }}" class=" btn btn-danger btn-sm"><i
-                                    class="fas fa-trash"></i> supprimer</a>
-                    </td>
+                    <th>Pseudo</th>
+                   <th>Serveur</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {{ user.username }}
+                        </td>
+                        <td>{{ user.serveur }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
     </section>
 {% endblock %}

@@ -19,7 +19,7 @@ class UserType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$creation = $options['creation']; //option creation pour l'ajout et edit user
-		$serveurs = $options['serveurs'];
+		$roles = $options['roles'];
 		$builder
 			->add('email', EmailType::class, array(
 				'label' => 'Email: '
@@ -27,41 +27,29 @@ class UserType extends AbstractType
 			->add('username', TextType::class, array(
 				'label' => 'Pseudo: '
 			))
-			->add('roles', ChoiceType::class, array(
-				'label' => 'Rôles: ',
-				'placeholder' => 'Sélectionnez un rôle',
-				'choices' => array(
-					'Admin ' => 'ROLE_ADMIN',
-					'Modérateur ' => 'ROLE_MOD',
-					'User ' => 'ROLE_USER'
-				),
-				'expanded' => true,
-				'multiple' => true,
-			))
-		;
-
-
-		if ($serveurs ==  'lol'){// TODO: Cocher par défaut les serveurs rattaché à l'utilisateur
-			$builder
 			->add('serveur', EntityType::class, array(
-				'class'=>Serveur::class,
-				'placeholder'=> 'Choisissez votre serveur: ',
-				'data'=>$serveurs->getValues(),
-				'multiple'=>true,
-				'expanded'=>true,
-				'mapped'=>false
+				'class' => Serveur::class,
+				'placeholder' => 'Choisissez votre serveur: ',
+				'multiple' => false,
+				'expanded' => false,
 			));
-		}else{
-			$builder
-			->add('serveur', EntityType::class, array(
-				'class'=>Serveur::class,
-				'placeholder'=> 'Choisissez votre serveur: ',
-				'multiple'=>true,
-				'expanded'=>true,
-				'mapped'=>false
-			));
-		}
 
+		// Gestion des rôles réservé à l'admin uniquement
+			if (in_array('ROLE_ADMIN',$roles)){
+				$builder
+					->add('roles', ChoiceType::class, array(
+						//'is_granted_attribute' => 'ROLE_ADMIN',
+						'label' => 'Rôles: ',
+						'placeholder' => 'Sélectionnez un rôle',
+						'choices' => array(
+							'Admin ' => 'ROLE_ADMIN',
+							'Modérateur ' => 'ROLE_MOD',
+							'User ' => 'ROLE_USER'
+						),
+						'expanded' => true,
+						'multiple' => true,
+					));
+			}
 
 		// nouvel utilisateur
 		if ($creation === 1) {
@@ -71,7 +59,7 @@ class UserType extends AbstractType
 					'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
 					'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
 					'required' => true));
-//				->add('Ajouter', SubmitType::class);
+
 
 			// édit utilisateur
 		} elseif ($creation === 2) {
@@ -81,7 +69,6 @@ class UserType extends AbstractType
 					'first_options' => ['label' => 'Mot de passe* : ', 'attr' => ['placeholder' => '*******']],
 					'second_options' => ['label' => 'Répétez le mot de passe* : ', 'attr' => ['placeholder' => '*******']],
 					'required' => false));
-//				->add('Modifier', SubmitType::class);
 		}
 	}
 
@@ -90,7 +77,7 @@ class UserType extends AbstractType
 		$resolver->setDefaults([
 			'data_class' => User::class,
 			'creation' => null,
-			'serveurs'=>null,
+			'roles'=>null,
 		]);
 	}
 }
