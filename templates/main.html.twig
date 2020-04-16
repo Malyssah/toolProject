@@ -5,62 +5,74 @@
 {% block body %}
 
     <div class="page-content">
-        <div class="container-fluid">
+    <div class="container-fluid">
 
-            {% if serveurs %}
+        {% if serveurs %}
 
-            <h1 class="title-content">{{ serveurs.name }}</h1>
-            <hr>
-            <h2 class="pt-5 pb-5">Infos serveur</h2>
+        <h1 class="title-content">{{ serveurs.name }}</h1>
 
+
+        <div class="container-main">
             <!-- infos Générales serveur -->
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Utilisateurs</h4>
+            <h3 id="title-main" class="mb-4 p-2">Infos {{ serveurs.name }}</h3>
+
+            <div class="row box-card-main">
+                <div id="card-main" class="col-md-4">
+                    <h4 class="title-card-main">Utilisateurs</h4>
                     {% for user in serveurs.users|slice(0,3) %}
-                        <li class="list-unstyled">{{ user.username }}</li>
+                        <li class="list-unstyled litest">{{ user.username }}</li>
                     {% endfor %}
                     <a href="{{ path('list-Users') }}" class="btn btnForm btn-sm">Aller voir</a>
                 </div>
-                <div class="col-md-4">
-                    <h4>Alliances</h4>
-                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name)  %}
-                        <li class="list-unstyled">{{ alliance.name }}</li>
+
+                <div id="card-main" class="col-md-4">
+                    <h4 class="title-card-main">Alliances</h4>
+                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name) %}
+                        <li class="list-unstyled litest">{{ alliance.name }}</li>
                     {% endfor %}
                     <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
-            <br> <br>
-            <h2>Mon groupe</h2>
-            <hr>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container-main">
+            <!-- infos serveur de l'utilisateur -->
+            <h3 id="title-main" class="mb-4 p-2">Mon groupe</h3>
             <!-- infos sur mon groupe  -->
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row box-card-main">
+                <div id="card-main" class="col-md-4">
                     {% if alliance %}
-                    <h4>Membres</h4>
+                        <h4 class="title-card-main">Membres {{ alliance.name }}</h4>
                         {% if usersAlliance %}
                             {% for userAlliance in usersAlliance %}
-                            <li  class="list-unstyled">{{ userAlliance.username }}</li>
+                                <li class="list-unstyled litest">{{ userAlliance.username }}</li>
                             {% endfor %}
                         {% else %}
                             Aucun utilisateur dans l'alliance
                         {% endif %}
-                    <a href="#" class="btn btnForm btn-sm">Aller voir</a>
+                        <a href="#" class="btn btnForm btn-sm">Aller voir</a>
                     {% else %}
                         Vous n'êtes rattaché à aucune alliance
                     {% endif %}
+                    {#Pas de serveur#}
+                    {% else %}
+                        <h2 class="text-danger">
+                            Vous n'êtes rattaché à aucun serveur
+                            <a href="{{ path('edit-User',{id:app.user.id}) }}">En choisir un</a>
+                        </h2>
+                    {% endif %}
+                </div>
+{#                A MODIFIER #}
+                <div id="card-main" class="col-md-4">
+                    <h4 class="title-card-main">Titre</h4>
+                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name) %}
+                        <li class="list-unstyled litest">blablabla</li>
+                    {% endfor %}
+                    <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
                 </div>
             </div>
-
-            {#Pas de serveur#}
-            {% else %}
-                <h2 class="text-danger">
-                    Vous n'êtes rattaché à aucun serveur
-                    <a href="{{ path('edit-User',{id:app.user.id}) }}">En choisir un</a>
-                </h2>
-            {% endif %}
         </div>
     </div>
 
