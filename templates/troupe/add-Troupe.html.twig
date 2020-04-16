@@ -5,7 +5,7 @@
 {% block body %}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="alert-{{ label }}">
+            <div class="alert alert-{{ label }}">
                 {{ message }}
             </div>
         {% endfor %}
@@ -40,28 +40,5 @@
 
     </section>
     {{ form_end(form) }}
-
-
-
-  {#  <table>
-        <tr>
-            <th>Titre du film</th>
-            <td>Massacre à la tronçonneuse</td>
-            <td>Les bisounours font du ski</td>
-            <td>Lucky Luke, seul contre tous</td>
-
-        </tr>
-        <tr>
-            <th>Pour enfants ?</th>
-            <td>Non, trop violent</td>
-            <td>Oui, adapté</td>
-            <td rowspan="2">Pour toute la famille !</td>
-        </tr>
-        <tr>
-            <th>Pour adolescents ?</th>
-            <td>Oui</td>
-            <td>Pas assez violent...</td>
-        </tr>
-    </table>#}
 
 {% endblock %}

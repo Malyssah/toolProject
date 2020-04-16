@@ -51,11 +51,6 @@ class User implements UserInterface
 	private $username;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="App\Entity\Alliance", mappedBy="user")
-	 */
-	private $alliance;
-
-	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Troupe", mappedBy="users")
 	 */
 	private $troupes;
@@ -65,18 +60,26 @@ class User implements UserInterface
 	 */
 	private $lostPasswords;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Serveur", inversedBy="users")
+	/**
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Serveur", inversedBy="users")
 	 * @ORM\JoinColumn(name="serveur_id", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	private $serveur;
+
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $peuple;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Alliance", inversedBy="users")
      */
-    private $serveur;
+    private $alliance;
 
 	public function __construct()
          	{
-         		$this->alliance = new ArrayCollection();
          		$this->troupes = new ArrayCollection();
          		$this->lostPasswords = new ArrayCollection();
-         
          	}
 
 	public function getId(): ?int
@@ -176,34 +179,6 @@ class User implements UserInterface
          	}
 
 	/**
-	 * @return Collection|Alliance[]
-	 */
-	public function getAlliance(): Collection
-         	{
-         		return $this->alliance;
-         	}
-
-	public function addAlliance(Alliance $alliance): self
-         	{
-         		if (!$this->alliance->contains($alliance)) {
-         			$this->alliance[] = $alliance;
-         			$alliance->addUser($this);
-         		}
-         
-         		return $this;
-         	}
-
-	public function removeAlliance(Alliance $alliance): self
-         	{
-         		if ($this->alliance->contains($alliance)) {
-         			$this->alliance->removeElement($alliance);
-         			$alliance->removeUser($this);
-         		}
-         
-         		return $this;
-         	}
-
-	/**
 	 * @return Collection|Troupe[]
 	 */
 	public function getTroupes(): Collection
@@ -265,14 +240,38 @@ class User implements UserInterface
          		return $this;
          	}
 
-    public function getServeur(): ?Serveur
+	public function getServeur(): ?Serveur
+         	{
+         		return $this->serveur;
+         	}
+
+	public function setServeur(?Serveur $serveur): self
+         	{
+         		$this->serveur = $serveur;
+         
+         		return $this;
+         	}
+
+	public function getPeuple(): ?string
+         	{
+         		return $this->peuple;
+         	}
+
+	public function setPeuple(?string $peuple): self
+         	{
+         		$this->peuple = $peuple;
+         
+         		return $this;
+         	}
+
+    public function getAlliance(): ?Alliance
     {
-        return $this->serveur;
+        return $this->alliance;
     }
 
-    public function setServeur(?Serveur $serveur): self
+    public function setAlliance(?Alliance $alliance): self
     {
-        $this->serveur = $serveur;
+        $this->alliance = $alliance;
 
         return $this;
     }

@@ -25,7 +25,7 @@ class TroupeType extends AbstractType
 			))
 			->add('Enregistrer', SubmitType::class);
 
-		if ($peuple === 'ROMAIN') {
+		if ($peuple === 'romain') {
 			$builder
 				->add('imperian', IntegerType::class, array(
 					'label' => 'imperian: '
@@ -34,7 +34,7 @@ class TroupeType extends AbstractType
 					'label' => 'caesaris: '
 				));
 		}
-		if ($peuple === 'GAULOIS') {
+		if ($peuple === 'gaulois') {
 			$builder
 				->add('phalange', IntegerType::class, array(
 					'label' => 'phalange: '
@@ -43,7 +43,7 @@ class TroupeType extends AbstractType
 					'label' => 'druide: '
 				));
 		}
-		if ($peuple === 'GERMAIN') {
+		if ($peuple === 'germain') {
 			$builder
 				->add('gourdin', IntegerType::class, array(
 					'label' => 'gourdin: '

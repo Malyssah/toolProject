@@ -3,38 +3,47 @@
 {% block title %}Créer un groupe{% endblock %}
 
 {% block body %}
-    {# retour liste users#}
-    <div class="row justify-content-start">
-        <a href="{{ path('list-Alliances') }}"><i class="fas fa-angle-left"></i> retour à la liste des groupes</a>
-    </div>
 
-    <section class="d-flex justify-content-center">
-        <div class="card col-5 shadow p-3 mb-5 rounded">
-            <div class="card-body">
-                <h3 class="card-title titleForm">Créer un groupe:</h3>
-                <br>
+    <main class="page-content">
+        <a class="ml-5" href="{{ path('list-Alliances') }}"><i class="fas fa-angle-left"></i> retour à la liste des
+            groupes</a>
+        <hr>
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="card col-6 shadow p-3 mt-3 rounded d-flex justify-content-center">
+                <div class="card-body">
 
-                {{ form_start(form) }}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
 
-                <div class="form-group">
-                {{ form_row(form.serveur) }}
+                    <h3 class="card-title titleForm" style="text-align: center;">Créer un groupe:</h3>
+                    <br>
+
+                    {{ form_start(form) }}
+
+                    <div class="form-group">
+                        {{ form_row(form.serveur) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_row(form.name) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_row(form.cadran) }}
+                    </div>
+
+                    <div class="text-center">
+                        {{ form_row(form.Enregistrer, {'attr': {'class':'btn btn-lg btnForm btn-lg btn-block'}}) }}
+                    </div>
+
+                    {{ form_end(form) }}
                 </div>
-
-                <div class="form-group">
-                {{ form_row(form.name) }}
-                </div>
-
-                <div class="form-group">
-                {{ form_row(form.cadran) }}
-                </div>
-
-                <div class="text-center">
-                {{ form_row(form.Enregistrer, {'attr': {'class':'btn btn-lg btnForm btn-lg btn-block'}}) }}
-                </div>
-
-                {{ form_end(form) }}
-
             </div>
         </div>
-    </section>
+    </main>
 {% endblock %}

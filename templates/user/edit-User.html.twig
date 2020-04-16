@@ -3,61 +3,62 @@
 {% block title %}Modifier{% endblock %}
 
 {% block body %}
+    <div class="container vh-100">
 
-    <section class="d-flex justify-content-center">
-        {#retour liste users#}
-        <div class="col-1">
-            <a href="{{ path('list-Users') }}"><i class="fas fa-angle-left"></i> retour à la liste</a>
-        </div>
-        <div class="card col-5 shadow p-3 mb-5 rounded">
-            <div class="card-body">
+        <a class="ml-5" href="{{ path('admin-list-Users') }}"><i class="fas fa-angle-left"></i> retour à la liste</a>
 
+        <div class="page-content row align-items-center">
+            <div class="card">
+                <div class="card-body">
 
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert-{{ label }}">
-                            {{ message }}
-                        </div>
+                    <h3 class="card-title">Modifier</h3>
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-                <h3 class="card-title titleForm" style="text-align: center;">Modifier</h3>
-                <br>
 
-                {{ form_start(form) }}
-
-                <div class="form-group">
-                    {{ form_label(form.email) }}
-                    {{ form_errors(form.email) }}
-                    {{ form_widget(form.email, {'attr' : {'class' : 'mb-3', 'placeholder' : 'email@example.com'}}) }}
-                </div>
-
-                <div class="form-group">
-                    {{ form_label(form.username) }}
-                    {{ form_errors(form.username) }}
-                    {{ form_widget(form.username, {'attr' : {'class' : 'mb-3', 'placeholder' : 'Pseudo'}}) }}
-                </div>
-
-                <div class="form-group">
-                    {{ form_row(form.serveur, {label_attr: {class: 'checkbox-custom'}}) }}
-                </div>
-
-                <div class="form-group">
-                    {{ form_row(form.plainPassword, {'attr' : {'class' : 'mb-3'}}) }}
-                </div>
-
-                {# uniquement pour l'admin #}
-                {% if is_granted('ROLE_ADMIN') %}
+                    {{ form_start(form) }}
                     <div class="form-group">
-                        {{ form_row(form.roles, {label_attr: {class: 'checkbox-custom'}}) }}
+                        {{ form_label(form.email) }}
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email, {'attr' : {'class' : 'mb-3', 'placeholder' : 'email@example.com'}}) }}
                     </div>
-                {% endif %}
 
-                <div class="text-center">
-                    <button class="btn btn-lg btnForm btn-lg btn-block" type="submit">Modifier</button>
+                    <div class="form-group">
+                        {{ form_label(form.username) }}
+                        {{ form_errors(form.username) }}
+                        {{ form_widget(form.username, {'attr' : {'class' : 'mb-3', 'placeholder' : 'Pseudo'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_row(form.serveur, {label_attr: {class: 'checkbox-custom'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_row(form.peuple) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_row(form.plainPassword, {'attr' : {'class' : 'mb-3'}}) }}
+                    </div>
+
+                    {# uniquement pour l'admin #}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="form-group">
+                            {{ form_row(form.roles, {label_attr: {class: 'checkbox-custom'}}) }}
+                        </div>
+                    {% endif %}
+
+                    <div class="text-center">
+                        <button class="btn btn-lg btnForm btn-lg btn-block" type="submit">Modifier</button>
+                    </div>
+                    <br>
+                    {{ form_end(form) }}
                 </div>
-                <br>
-                {{ form_end(form) }}
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Serveur;
 
+use App\Entity\Alliance;
 use App\Entity\User;
 use App\Repository\ServeurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +19,18 @@ class GestionServeur extends AbstractController
 	{
 		$userCourant = $this->getUser();
 		$serveurs = $userCourant->getServeur();
+		$alliance=$userCourant->getAlliance();
+		if($alliance){
+			$usersAlliance = $alliance->getUsers();
+		}else{
+			$usersAlliance = null;
+		}
 
 
 		return $this->render('main.html.twig', [
-			'serveurs'=>$serveurs
+			'serveurs'=>$serveurs,
+			'alliance'=>$alliance,
+			'usersAlliance'=>$usersAlliance
 		]);
 	}
 
@@ -33,8 +42,10 @@ class GestionServeur extends AbstractController
 	 */
 	public function accueilServeur(ServeurRepository $serveurRepository, $id = null){
 		$serveur = $serveurRepository->findOneBy(['id'=>$id]);
-	    //Prendre les infos du serveur et les afficher dans une vue
 
+
+
+	    //Prendre les infos du serveur et les afficher dans une vue
         return $this->render('main.html.twig',[
         	'serveur'=>$serveur
 		]);

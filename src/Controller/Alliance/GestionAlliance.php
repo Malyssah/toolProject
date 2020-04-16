@@ -37,21 +37,35 @@ class GestionAlliance extends AbstractController
 	 */
 	public function addAlliance(Request $request, EntityManagerInterface $manager)
 	{
-		$alliance = new Alliance();
-		$form = $this->createForm(AllianceType::class, $alliance, array('creation' => 1));
-		$form->handleRequest($request);
+		//si utilisateur courant à un serveur soit !isset  ou  is null
+		$userCourant = $this->getUser();
+		$serveurs = $userCourant->getServeur();
+		if (!isset($serveurs)) {
+			//on refuse et on l'invit à voisir un serveur
+			$this->addFlash('warnig', 'Il faut être rattaché à un serveur afin de pouvoir créer un groupe !');
+			return $this->redirectToRoute('edit-User',[ 'id'=>$userCourant->getId()]);
+		} else {
+			//il peux creer un groupe
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			/** @var Alliance $alliance */
-			$alliance = $form->getData();
-			$manager->persist($alliance);
-			$manager->flush();
-			$this->addFlash('success', 'Groupe crée avec succès !');
-			return $this->redirectToRoute('list-Alliances');
+			$alliance = new Alliance();
+			$form = $this->createForm(AllianceType::class, $alliance, array('creation' => 1));
+			$form->handleRequest($request);
+
+			if ($form->isSubmitted() && $form->isValid()) {
+				/** @var Alliance $alliance */
+				//todo: rattaché l'utilisateur qui créé l'alliance
+				
+
+				$alliance = $form->getData();
+				$manager->persist($alliance);
+				$manager->flush();
+				$this->addFlash('success', 'Groupe crée avec succès !');
+				return $this->redirectToRoute('list-Alliances');
+			}
+			return $this->render('alliance/add-Alliance.html.twig', array(
+				'form' => $form->createView(), 'alliance' => $alliance
+			));
 		}
-		return $this->render('alliance/add-Alliance.html.twig', array(
-			'form' => $form->createView(), 'alliance' => $alliance
-		));
 	}
 
 	/**

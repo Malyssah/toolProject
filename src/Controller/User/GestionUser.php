@@ -22,9 +22,14 @@ class GestionUser extends AbstractController
 	 */
 	public function usersList(UserRepository $userRepository)
 	{
-		$users = $userRepository->findAll();
+		$userCourant = $this->getUser();
+
+		$listeUsers = $userRepository->findBy(['serveur' => $userCourant->getServeur()],['username'=>'ASC']);
+
+
 		return $this->render('user/users.html.twig', [
-			'users' => $users,
+			'userCourant' => $userCourant,
+			'listeUsers' => $listeUsers,
 		]);
 	}
 
@@ -37,10 +42,16 @@ class GestionUser extends AbstractController
 	 */
 	public function addUser(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
 	{
-		$rolesUserCourant = $this->getUser()->getRoles();
+		$userCourant = $this->getUser();
+		if ($userCourant){
+			$rolesUserCourant = $this->getUser()->getRoles();
+		}else{
+			$rolesUserCourant = [];
+		}
 		$user = new User();
 
-		$form = $this->createForm(UserType::class, $user, array('creation' => 1,'roles'=>$rolesUserCourant));
+
+		$form = $this->createForm(UserType::class, $user, array('creation' => 1, 'roles' => $rolesUserCourant));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -59,7 +70,7 @@ class GestionUser extends AbstractController
 			$manager->flush();
 
 			$this->addFlash('success', 'Utilisateur Ajouté !');
-			return $this->redirectToRoute('list-Users');
+			return $this->redirectToRoute('app_login');
 		}
 		return $this->render('user/add-User.html.twig', array(
 			'form' => $form->createView(),
@@ -80,7 +91,7 @@ class GestionUser extends AbstractController
 		if (!$user) { //si pas d'utilisateur
 			$user = new User();
 		}
-		$form = $this->createForm(UserType::class, $user, array('creation' => 2, 'roles'=>$rolesUserCourant));
+		$form = $this->createForm(UserType::class, $user, array('creation' => 2, 'roles' => $rolesUserCourant));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {

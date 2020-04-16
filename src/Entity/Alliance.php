@@ -29,18 +29,18 @@ class Alliance
     private $cadran;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="alliance")
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Serveur", inversedBy="alliances")
      */
     private $serveur;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="alliance")
+     */
+    private $users;
+
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,32 +72,6 @@ class Alliance
         return $this;
     }
 
-    /**
-     * @return Collection|user[]
-     */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
-
-    public function addUser(user $user): self
-    {
-        if (!$this->user->contains($user)) {
-            $this->user[] = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeUser(user $user): self
-    {
-        if ($this->user->contains($user)) {
-            $this->user->removeElement($user);
-        }
-
-        return $this;
-    }
-
     public function getServeur(): ?Serveur
     {
         return $this->serveur;
@@ -106,6 +80,37 @@ class Alliance
     public function setServeur(?Serveur $serveur): self
     {
         $this->serveur = $serveur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setAlliance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getAlliance() === $this) {
+                $user->setAlliance(null);
+            }
+        }
 
         return $this;
     }

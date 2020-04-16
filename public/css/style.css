@@ -1,42 +1,43 @@
-/***
-font-family: 'Lora', serif;
-
-couleurs tests:
-beige clair: #fff9eb
-orange hover: #da7703
-jaune: #e99200
-box shadow : #9fa1a0
-
-*/
-
 /* Général */
 * {
     font-family: 'Lora', serif;
-
 }
+/*logo*/
 span.orange{
     color: #e99200;
 }
-
-body {
-    /*: url(../img/fond.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;*/
+.alert{
+    margin: 15px 0 15px 0;
+    padding: 15px 15px 15px 15px;
 }
-/*!*navbar*!
-nav .ul .li .a{
-    font-family: 'Lora', serif;
-}*/
+/*corp général*/
+.page-content{
+    justify-content: center;
+    height: inherit;
+}
+.title-content{
+    margin-bottom: 40px;
+    text-align: center;
+}
+/*corp pages tableau*/
+.page-tab{
+    justify-content: center;
 
-/* formulaires */
+}
+/* formulaires et card */
 .card {
-    background-color: #fff9eb;
+    display: flex;
+    background-color: #31353d;
+    color: #ffffff;
     box-shadow: 0 2px 6px 0 #9fa1a0;
+    padding: 20px 25px 0px 25px;
 }
 
-.titleForm {
+
+.card-title {
     font-family: 'Lora', serif;
+    text-align: center;
+    padding-bottom: 15px;
 }
 
 /* boutons*/
@@ -44,14 +45,14 @@ nav .ul .li .a{
     background-color: #e99200;
     border-color: #e99200;
     color: #ffffff;
-    box-shadow: 0 2px 6px 0 #9fa1a0;
+    margin-top: 20px;
 }
 
 .btnForm:hover {
     background-color:  #e99200;
     border-color: #e99200;
     color: #ffffff;
-    box-shadow: 0 5px 10px 0 #9fa1a0;
+    /*box-shadow: 0 5px 10px 0 #9fa1a0;*/
     cursor: pointer;
 
 }
@@ -425,10 +426,6 @@ body {
 
 .page-wrapper .page-content > div {
     padding: 20px 40px;
-}
-
-.page-wrapper .page-content {
-    overflow-x: hidden;
 }
 
 /*------scroll bar---------------------*/

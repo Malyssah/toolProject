@@ -4,40 +4,43 @@
 
 {% block body %}
 
-    <section class="container">
-        <h1>Liste des groupes</h1>
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+    <main class="page-content">
+        <div class="container-fluid">
+            <h1 class="title-content">Alliances du serveur</h1>
 
-        <div class="row justify-content-end">
-            <a href="{{ path('add-Alliance') }}" class="btn btnForm btn-sm"><i class="fas fa-plus"></i> Créer
-                un groupe</a>
-        </div>
-        <br>
-        <table class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>nom</th>
-                <th>serveur</th>
-                <th>cadran</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for alliance in alliances %}
-                <tr>
-                    <td>{{ alliance.id }}</td>
-                    <td>{{ alliance.name }}</td>
-                    <td>{{ alliance.serveur }}</td>
-                    <td>{{ alliance.cadran }}</td>
-                </tr>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-            </tbody>
-        </table>
-    </section>
+
+            <div class="row justify-content-end">
+                <a href="{{ path('add-Alliance') }}" class="btn btnForm btn-sm"><i class="fas fa-plus"></i> Créer
+                    un groupe</a>
+            </div>
+            <br>
+            <table class="table table-striped shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>nom</th>
+                    <th>serveur</th>
+                    <th>cadran</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for alliance in alliances %}
+                    <tr>
+                        <td>{{ alliance.id }}</td>
+                        <td>{{ alliance.name }}</td>
+                        <td>{{ alliance.serveur }}</td>
+                        <td>{{ alliance.cadran }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
 {% endblock %}

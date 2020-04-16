@@ -5,8 +5,6 @@
 
 {% block body %}
 
-{#    <a href="{{ path('edit-User', {id:app.user.id}) }}"> Voir les serveurs</a><br>#}
-
     {% if is_granted('ROLE_USER') %}
         <section class="container">
             <a class="navbar-brand col text-right" href="{{ path('edit-User', {id:user.id}) }}"><i class="fas fa-user"> Profil</i></a>

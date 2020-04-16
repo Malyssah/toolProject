@@ -5,14 +5,14 @@
 {% block body %}
 
 
+    <div class="page-content">
+        <div class="container-fluid">
+            <h1 class="title-content">Admin - Gestion des utilisateurs</h1>
 
-    <section class="container ">
-        <h1>Admin - Gestion des utilisateurs</h1>
-        <table class="table table-striped">
 
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
-                    <div class="alert-{{ label }}">
+                    <div class="alert-{{ label }} mt-2">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -24,31 +24,35 @@
                     utilisateur</a>
             </div>
             <br>
-            <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Pseudos</th>
-                <th>Emails</th>
-                <th>Serveurs</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
+            <table class="table table-striped shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
                 <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.serveur }}</td>
-                    <td>
-                        <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success">
-                            <i class="fas fa-pen"></i> Modifier</a>
-                        <a href="{{ path('admin-delete-User',{ id:user.id }) }}" class=" btn btn-danger">
-                            <i class="fas fa-trash"> Supprimer</i></a>
-                    </td>
+                    <th>ID</th>
+                    <th>Pseudos</th>
+                    <th>Emails</th>
+                    <th>Peuple</th>
+                    <th>Serveurs</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </section>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.Peuple }}</td>
+                        <td>{{ user.serveur }}
+                        <td>
+                            <a href="{{ path('edit-User',{ id:user.id }) }}" class="btn btn-success btn-sm">
+                                <i class="fas fa-pen"></i> Modifier</a>
+                            <a href="{{ path('admin-delete-User',{ id:user.id }) }}" class=" btn btn-danger btn-sm">
+                                <i class="fas fa-trash"> Supprimer</i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

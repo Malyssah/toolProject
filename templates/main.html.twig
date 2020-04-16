@@ -4,47 +4,64 @@
 
 {% block body %}
 
-    <main class="page-content">
+    <div class="page-content">
+        <div class="container-fluid">
 
-    <div class="container-fluid">
+            {% if serveurs %}
 
-        {% if serveurs %}
-
-            <h1 style="margin-bottom: 90px">{{ serveurs.name }}</h1>
+            <h1 class="title-content">{{ serveurs.name }}</h1>
             <hr>
+            <h2 class="pt-5 pb-5">Infos serveur</h2>
 
-
-        <!-- Example row of columns -->
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Utilisateurs</h3>
-               {% for serveur in serveurs %}
-              <li>{{ username.serveurs.user }}</li>
-               {% endfor %}
-            </div>
-
-            <div class="col-md-4">
-                <h3>Alliances</h3>
-{#                {% for alliance in alliances %}#}
-                   <li>#dddddddd</li>
-{#                {% endfor %}#}
-            </div>
-
-            <div class="col-md-4">
-                <h3>Troupes</h3>
-{#                {% for serveur in serveurs %}#}
-                    <li>#ddddddddddd</li>
-{#                {% endfor %}#}
+            <!-- infos Générales serveur -->
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Utilisateurs</h4>
+                    {% for user in serveurs.users|slice(0,3) %}
+                        <li class="list-unstyled">{{ user.username }}</li>
+                    {% endfor %}
+                    <a href="{{ path('list-Users') }}" class="btn btnForm btn-sm">Aller voir</a>
+                </div>
+                <div class="col-md-4">
+                    <h4>Alliances</h4>
+                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name)  %}
+                        <li class="list-unstyled">{{ alliance.name }}</li>
+                    {% endfor %}
+                    <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
+                </div>
             </div>
         </div>
+        <div class="container-fluid">
+            <br> <br>
+            <h2>Mon groupe</h2>
+            <hr>
+            <!-- infos sur mon groupe  -->
+            <div class="row">
+                <div class="col-md-4">
+                    {% if alliance %}
+                    <h4>Membres</h4>
+                        {% if usersAlliance %}
+                            {% for userAlliance in usersAlliance %}
+                            <li  class="list-unstyled">{{ userAlliance.username }}</li>
+                            {% endfor %}
+                        {% else %}
+                            Aucun utilisateur dans l'alliance
+                        {% endif %}
+                    <a href="#" class="btn btnForm btn-sm">Aller voir</a>
+                    {% else %}
+                        Vous n'êtes rattaché à aucune alliance
+                    {% endif %}
+                </div>
+            </div>
 
             {#Pas de serveur#}
-        {% else %}
-            <h2 class="text-danger">
-                Vous n'êtes rattaché à aucun serveur
-                <a href="{{ path('edit-User',{id:app.user.id}) }}">En choisir un</a>
-            </h2>
-        {% endif %}
-
+            {% else %}
+                <h2 class="text-danger">
+                    Vous n'êtes rattaché à aucun serveur
+                    <a href="{{ path('edit-User',{id:app.user.id}) }}">En choisir un</a>
+                </h2>
+            {% endif %}
+        </div>
     </div>
+
 {% endblock %}

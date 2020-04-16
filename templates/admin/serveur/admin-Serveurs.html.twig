@@ -6,9 +6,10 @@
 
     {#si admin#}
     {% if is_granted('ROLE_ADMIN') %}
-        <section class="container">
-
-
+        <main class="page-content">
+        <div class="container-fluid">
+            <h1 class="title-content">Admin - Liste des serveurs</h1>
+            <hr>
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert-{{ label }}">
@@ -16,7 +17,6 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-            <br>
 
             {# ajout serveur#}
             <div class="row justify-content-end">
@@ -25,9 +25,8 @@
             </div>
             <br>
 
-            <h1>Admin - Liste des serveurs</h1>
             {# tableau serveur #}
-            <table class="table table-striped">
+            <table class="table table-striped shadow p-3 mb-5 bg-white rounded">
                 <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
@@ -42,17 +41,18 @@
                     <td>{{ serveur.name }}</td>
 
                     <td>
-                        <a href="{{ path('admin-Edit-Serveur',{ id:serveur.id }) }}" class="btn btn-success">
+                        <a href="{{ path('admin-Edit-Serveur',{ id:serveur.id }) }}" class="btn btn-success btn-sm">
                             <i class="fas fa-pen"> Modifier</i></a>
-                        <a href="{{ path('admin-Delete-Serveur',{ id:serveur.id }) }}" class=" btn btn-danger">
+                        <a href="{{ path('admin-Delete-Serveur',{ id:serveur.id }) }}" class=" btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i> Supprimer</a>
                     </td>
                     {% endfor %}
                 </tr>
                 </tbody>
             </table>
-        </section>
+        </div>
     {% endif %}
+    </main>
 {% endblock %}
 
 

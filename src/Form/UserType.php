@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -32,24 +34,32 @@ class UserType extends AbstractType
 				'placeholder' => 'Choisissez votre serveur: ',
 				'multiple' => false,
 				'expanded' => false,
+			))
+			->add('peuple', ChoiceType::class, array(
+				'label' => 'peuple: ',
+				'placeholder' => 'Sélectionnez votre peuple',
+				'choices' => array(
+					'romain' => 'Romain',
+					'germain' => 'Germain',
+					'gaulois' => 'Gaulois',
+				),
 			));
 
 		// Gestion des rôles réservé à l'admin uniquement
-			if (in_array('ROLE_ADMIN',$roles)){
-				$builder
-					->add('roles', ChoiceType::class, array(
-						//'is_granted_attribute' => 'ROLE_ADMIN',
-						'label' => 'Rôles: ',
-						'placeholder' => 'Sélectionnez un rôle',
-						'choices' => array(
-							'Admin ' => 'ROLE_ADMIN',
-							'Modérateur ' => 'ROLE_MOD',
-							'User ' => 'ROLE_USER'
-						),
-						'expanded' => true,
-						'multiple' => true,
-					));
-			}
+		if (in_array('ROLE_ADMIN', $roles)) {
+			$builder
+				->add('roles', ChoiceType::class, array(
+					'label' => 'Rôles: ',
+					'placeholder' => 'Sélectionnez un rôle',
+					'choices' => array(
+						'Admin ' => 'ROLE_ADMIN',
+						'Modérateur ' => 'ROLE_MOD',
+						'User ' => 'ROLE_USER'
+					),
+					'expanded' => true,
+					'multiple' => true,
+				));
+		}
 
 		// nouvel utilisateur
 		if ($creation === 1) {
@@ -77,7 +87,8 @@ class UserType extends AbstractType
 		$resolver->setDefaults([
 			'data_class' => User::class,
 			'creation' => null,
-			'roles'=>null,
+			'roles' => null,
 		]);
 	}
 }
+
