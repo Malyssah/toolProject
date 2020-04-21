@@ -140,7 +140,7 @@ class LostPassword extends AbstractController
 	}
 
 	/**
-	 * @Route("/password-valid/{id}", name="password-valid")
+	 * @Route("/password-valid", name="password-valid")
 	 * @return Response
 	 */
 	public function passwordValid()

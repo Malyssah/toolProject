@@ -5,8 +5,8 @@
 {% block body %}
 
     <div class="page-content">
-        <div class="container-fluid">
-            <h3 class="title-content">Utilisateurs du {{ serveurs.name }}</h3>
+        <div class="container">
+            <h3 class="title-content">Utilisateurs serveur</h3>
 
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
@@ -22,13 +22,34 @@
                 <tr>
                     <th>Pseudo</th>
                     <th>Peuple</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for user in listeUsers %}
                     <tr>
                         <td>{{ user.username }}</td>
-                        <td>{{ user.Peuple }}
+                        <td>{{ user.Peuple }}</td>
+                        {#<td>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-eye"></i> voir </a>
+                        </td>#}
+
+                        {% if app.user.alliance %}
+                            <td>
+                                {% if user.alliance %}
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Déjà membre d'une alliance">
+                                    <a href="" class="btn btn-success disabled btn-sm " style="pointer-events: none;">
+                                    <i class="fas fa-plus"></i> Ajouter</a>
+                                    </span>
+                                    Cet utilisateur à déjà une alliance
+                                {% else %}
+                                    <a href="{{path('rejoindre-Alliance',{ id : user.id })}}"
+                                       class="btn btn-success btn-sm">
+                                        <i class="fas fa-plus"></i> Ajouter</a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

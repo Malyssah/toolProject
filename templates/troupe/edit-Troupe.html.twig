@@ -9,54 +9,50 @@
             <h1 class="title-content">Mes troupes</h1>
             <hr>
 
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">
-                    {{ message }}
-                </div>
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+            {% if acces %}
+                {{ form_start(form) }}
 
-        <div class="container text-center">
-            <select name="typeTroupe" id="typeTroupe">
-                <option value="">Sélectionner un peuple</option>
-                <option value="romain">Romain</option>
-                <option value="germain">Germain</option>
-                <option value="gaulois">Gaulois</option>
-            </select>
-            <div id="formTroupe"></div>
-        </div>
+                <div class="page-content">
+                    <div class="card col-7 shadow p-3 mb-5 mt-5 rounded">
+                        <div class="card-body">
+
+                            {% if form.imperian is defined and form.caesaris is defined %}
+                                {{ form_row(form.imperian) }}
+                                {{ form_row(form.caesaris) }}
+                            {% endif %}
+
+
+                            {% if form.phalange is defined and form.druide is defined %}
+                                {{ form_row(form.phalange) }}
+                                {{ form_row(form.druide) }}
+                            {% endif %}
+
+
+                            {% if form.gourdin is defined and form.teuton is defined %}
+                                {{ form_row(form.gourdin) }}
+                                {{ form_row(form.teuton) }}
+                            {% endif %}
+
+                            {{ form_row(form.belier) }}
+
+                            {{ form_row(form.catapulte) }}
+
+                            {{ form_row(form.Enregistrer, {'attr': {'class':'btn btn-lg btnForm btn-lg btn-block'}}) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            {% else %}
+                Vous n'êtes pas rattaché à un serveur ou vous n'avez pas choisit de peuple
+                <a href="{{ path('edit-User',{ id : app.user.id}) }}">Modifier votre profil</a>
+            {% endif %}
         </div>
     </main>
-
-
-
-    <script>
-        $("#typeTroupe").on('change', function () {
-            if ($(this).val() !== '') {
-                let peuple = $(this).val();
-                formTroupe(peuple);
-            }
-        });
-
-        function formTroupe(peuple) {
-            $.ajax({
-                type: 'POST',
-                url: '{{ path('ajax-form-troupe') }}',
-                data: "peuple=" + peuple,
-                dataType: 'html',
-                success: function (data) {
-                    $('#formTroupe').html(data);
-                },
-                error: function (error) {
-                    console.log(error.responseText);
-                },
-                statusCode: {
-                    500: function () {
-                        $('#formTroupe').html('<div class="container"> <h3 class="text-danger">Erreur lors de l\'execution de la page</h3></div>');
-                    }
-                }
-            })
-        }
-    </script>
 {% endblock %}

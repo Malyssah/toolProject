@@ -2,28 +2,34 @@
 * {
     font-family: 'Lora', serif;
 }
+
 /*logo*/
-span.orange{
+span.orange {
     color: #e99200;
 }
-.alert{
+
+.alert {
     margin: 15px 0 15px 0;
     padding: 15px 15px 15px 15px;
 }
+
 /*corp général*/
-.page-content{
+.page-content {
     justify-content: center;
     height: inherit;
 }
-.title-content{
+
+.title-content {
     margin-bottom: 40px;
     text-align: center;
 }
+
 /*corp pages tableau*/
-.page-tab{
+.page-tab {
     justify-content: center;
 
 }
+
 /* formulaires et card */
 .card {
     display: flex;
@@ -33,7 +39,6 @@ span.orange{
     padding: 20px 25px 0px 25px;
 }
 
-
 .card-title {
     font-family: 'Lora', serif;
     text-align: center;
@@ -42,20 +47,69 @@ span.orange{
 
 /* boutons*/
 .btnForm {
-    background-color: #e99200;
-    border-color: #e99200;
+    background-color: #da7703;
+    border-color: #da7703;
     color: #ffffff;
     margin-top: 20px;
 }
 
 .btnForm:hover {
-    background-color:  #e99200;
+    background-color: #e99200;
     border-color: #e99200;
     color: #ffffff;
-    /*box-shadow: 0 5px 10px 0 #9fa1a0;*/
     cursor: pointer;
 
 }
+
+/*main*/
+
+#title-main {
+    border-radius: 5px;
+    /*    color: #ffffff;
+        background: rgb(49, 53, 61);
+        background: -moz-linear-gradient(90deg, rgba(49, 53, 61, 1) 18%, rgba(216, 217, 218, 1) 59%, rgba(255, 255, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(49, 53, 61, 1) 18%, rgba(216, 217, 218, 1) 59%, rgba(255, 255, 255, 1) 100%);
+        background: linear-gradient(90deg, rgba(49, 53, 61, 1) 18%, rgba(216, 217, 218, 1) 59%, rgba(255, 255, 255, 1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#31353d", endColorstr="#ffffff", GradientType=1);*/
+}
+
+.container-main {
+    margin: 10px 50px 10px 50px;
+    padding: 45px 70px 60px 70px;
+    /*border: 8px #31353d double;*/
+    /*border-radius: 20px;*/
+}
+
+.box-card-main {
+    justify-content: space-around;
+    /*Juste le temps de faire le css*/
+    /*border: 3px red dashed;*/
+}
+
+#card-main {
+    padding: 30px 30px 40px 30px;
+    background: #3a3f48;
+    color: #ffffff;
+    /*border-radius: 20px;*/
+    /*Juste le temps de faire le css*/
+    /*border: 3px blue solid;*/
+}
+
+.title-card-main {
+    font-family: 'Lora', serif;
+    margin-bottom: 30px;
+    text-align: center;
+    /*Juste le temps de faire le css*/
+    /*border: 3px #42cb1e solid;*/
+}
+
+.litest {
+    margin-bottom: 3px;
+    font-size: 16px;
+    /*Juste le temps de faire le css*/
+    /*border: 3px #dc7f60 solid;*/
+}
+
 
 /*sidebar*/
 
@@ -143,7 +197,7 @@ body {
 /*----------------toggeled sidebar----------------*/
 
 .page-wrapper.toggled .sidebar-wrapper {
-    left: 0px;
+    left: 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -157,12 +211,12 @@ body {
     position: fixed;
     left: 0;
     top: 10px;
-    border-radius: 0 4px 4px 0px;
+    border-radius: 0 4px 4px 0;
     width: 35px;
     transition-delay: 0.3s;
 }
 
-.page-wrapper.toggled #show-sidebar {
+.toggled #show-sidebar {
     left: -40px;
 }
 
@@ -392,7 +446,7 @@ body {
     top: 0;
 }
 
-.badge-sonar {
+/*.badge-sonar {
     display: inline-block;
     background: #980303;
     border-radius: 50%;
@@ -413,7 +467,7 @@ body {
     width: 100%;
     height: 100%;
     animation: sonar 1.5s infinite;
-}
+}*/
 
 /*--------------------------page-content-----------------------------*/
 

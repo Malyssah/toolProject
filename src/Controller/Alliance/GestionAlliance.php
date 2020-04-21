@@ -3,6 +3,7 @@
 namespace App\Controller\Alliance;
 
 use App\Entity\Alliance;
+use App\Entity\User;
 use App\Form\AllianceType;
 use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,10 +23,16 @@ class GestionAlliance extends AbstractController
 	 */
 	public function alliancesList(AllianceRepository $allianceRepository)
 	{
-		$alliances = $allianceRepository->findAll();
+		//recup l'utilisateur courant
+		$utilisateurCourant = $this->getUser();
+		$idAllianceUtilisateurCourant = $this->getUser()->getAlliance()->getid();
+		$serveurUtilisateurCourant = $utilisateurCourant->getServeur();
+		$alliances = $allianceRepository->findBy(['serveur' => $serveurUtilisateurCourant]);
 
 		return $this->render('alliance/alliances.html.twig', [
 			'alliances' => $alliances,
+			'idAlliance'=> $idAllianceUtilisateurCourant
+
 		]);
 	}
 
@@ -37,13 +44,13 @@ class GestionAlliance extends AbstractController
 	 */
 	public function addAlliance(Request $request, EntityManagerInterface $manager)
 	{
-		//si utilisateur courant à un serveur soit !isset  ou  is null
+		//si utilisateur courant à un serveur
 		$userCourant = $this->getUser();
 		$serveurs = $userCourant->getServeur();
 		if (!isset($serveurs)) {
-			//on refuse et on l'invit à voisir un serveur
+			//on refuse et on l'invit à choisir un serveur
 			$this->addFlash('warnig', 'Il faut être rattaché à un serveur afin de pouvoir créer un groupe !');
-			return $this->redirectToRoute('edit-User',[ 'id'=>$userCourant->getId()]);
+			return $this->redirectToRoute('edit-User', ['id' => $userCourant->getId()]);
 		} else {
 			//il peux creer un groupe
 
@@ -53,10 +60,20 @@ class GestionAlliance extends AbstractController
 
 			if ($form->isSubmitted() && $form->isValid()) {
 				/** @var Alliance $alliance */
-				//todo: rattaché l'utilisateur qui créé l'alliance
-				
 
 				$alliance = $form->getData();
+				//todo: rattacher l'utilisateur qui créé l'alliance
+				//$createurAlliance = $userCourant->getId->$this->addAlliance();
+				//$createurAlliance = $userCourant->getId()
+				//$createurAlliance = $userCourant->get("alliance")->getData();
+				//$createurAlliance = $userCourant->$this->addAlliance()->getData();
+				//$alliance->$this->addUser()->getData();
+				//$user->setAlliance($this);
+				//$usersAlliance = $alliance->addUser( $usersAlliance);
+
+				//$chefAlliance = $this->getUser()->addUser();
+				//$chefAlliance->$this->setAlliance();
+
 				$manager->persist($alliance);
 				$manager->flush();
 				$this->addFlash('success', 'Groupe crée avec succès !');
@@ -69,6 +86,8 @@ class GestionAlliance extends AbstractController
 	}
 
 	/**
+	 * Modifier une alliance
+	 *
 	 * @Route("alliance/{id}", name="edit-Alliance")
 	 * @param Alliance $alliance
 	 * @param Request $request
@@ -107,6 +126,28 @@ class GestionAlliance extends AbstractController
 		$manager->remove($alliance);
 		$manager->flush();
 		$this->addFlash('danger', 'Groupe supprimé !');
+		return $this->redirectToRoute('list-Alliances');
+	}
+
+	/**
+	 * Ajouter un utilisateur à l'alliance
+	 *
+	 * @Route("/alliance/addMembre/{id}", name="add-Membre-Alliance")
+	 * @param Alliance $alliance
+	 * @param Request $request
+	 * @param EntityManagerInterface $manager
+	 * @return RedirectResponse
+	 */
+	public function addMembreAlliance(Alliance $alliance, Request $request, EntityManagerInterface $manager)
+	{
+		if ($alliance) {
+			$utilisateurCourant = $this->getUser();
+			if ($utilisateurCourant) {
+				$utilisateurCourant->setAlliance($alliance);
+				$manager->persist($utilisateurCourant);
+				$manager->flush();
+			}
+		}
 		return $this->redirectToRoute('list-Alliances');
 	}
 }

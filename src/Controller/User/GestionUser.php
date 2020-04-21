@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use App\Entity\Alliance;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -23,10 +24,7 @@ class GestionUser extends AbstractController
 	public function usersList(UserRepository $userRepository)
 	{
 		$userCourant = $this->getUser();
-
 		$listeUsers = $userRepository->findBy(['serveur' => $userCourant->getServeur()],['username'=>'ASC']);
-
-
 		return $this->render('user/users.html.twig', [
 			'userCourant' => $userCourant,
 			'listeUsers' => $listeUsers,
@@ -57,9 +55,9 @@ class GestionUser extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var User $user */
 			$user = $form->getData();
+
 			// On récupère le champs serveur qu'on a définit dans le formulaire
-			// On doit passer par un $form->get car c'est un champs qui n'appartient pas
-			// à l'entité userServeurPeuple, c'est un champs non-mappé
+			// On doit passer par un $form->get car c'est un champs qui n'appartient pas à l'entité user
 			$serveurs = $form->get("serveur")->getData();
 
 			//On encode le mot de passe
@@ -132,6 +130,28 @@ class GestionUser extends AbstractController
 		$manager->flush();
 
 		$this->addFlash('danger', 'Utilisateur supprimé !');
+		return $this->redirectToRoute('list-Users');
+	}
+
+	/**
+	 * rejoindre une alliance
+	 *
+	 * @Route("/user/rejoindreAlliance/{id}", name="rejoindre-Alliance")
+	 * @param Request $request
+	 * @param EntityManagerInterface $manager
+	 * @param Alliance $alliance
+	 * @param User $user
+	 * @return RedirectResponse
+	 */
+	public function addAlliance(Request $request, EntityManagerInterface $manager, Alliance $alliance, User $user){
+		if($user){
+			$alliance = $this->getUser()->getAlliance();
+			if($alliance){
+				$user->setAlliance($alliance);
+				$manager->persist($user);
+				$manager->flush();
+			}
+		}
 		return $this->redirectToRoute('list-Users');
 	}
 }

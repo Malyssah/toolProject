@@ -4,9 +4,9 @@
 
 {% block body %}
 
-    <main class="page-content">
-        <div class="container-fluid">
-            <h1 class="title-content">Alliances du serveur</h1>
+    <div class="page-content">
+        <div class="container">
+            <h1 class="title-content">Liste alliances</h1>
 
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
@@ -28,19 +28,39 @@
                     <th>nom</th>
                     <th>serveur</th>
                     <th>cadran</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for alliance in alliances %}
-                    <tr>
-                        <td>{{ alliance.id }}</td>
-                        <td>{{ alliance.name }}</td>
-                        <td>{{ alliance.serveur }}</td>
-                        <td>{{ alliance.cadran }}</td>
-                    </tr>
-                {% endfor %}
+                <tr>
+                    <td>{{ alliance.id }}</td>
+                    <td>{{ alliance.name }}</td>
+                    <td>{{ alliance.serveur }}</td>
+                    <td>{{ alliance.cadran }}</td>
+                    <td>
+                        {#<a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> voir</a>#}
+                        {% if idAlliance == alliance.id %}
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Déjà membre">
+                                <a href="" class="btn btn-success btn-sm disabled" style="pointer-events: none;">
+                                    <i class="fas fa-plus"></i> rejoindre
+                                </a>
+                            </span>
+                        {% else %}
+                            <a href="{{ path('add-Membre-Alliance',{ id : alliance.id }) }}"
+                               class="btn btn-success btn-sm">
+                                <i class="fas fa-plus"></i> rejoindre
+                            </a>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
-    </main>
+    </div>
+
+    <script>
+        $('#example').tooltip(options)
+    </script>
 {% endblock %}

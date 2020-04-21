@@ -5,18 +5,13 @@
 {% block body %}
 
     <div class="page-content">
-    <div class="container-fluid">
-
         {% if serveurs %}
-
         <h1 class="title-content">{{ serveurs.name }}</h1>
-
-
         <div class="container-main">
             <!-- infos Générales serveur -->
-            <h3 id="title-main" class="mb-4 p-2">Infos {{ serveurs.name }}</h3>
-
+            <h3 id="title-main" class="mb-4 p-2">Infos serveur</h3>
             <div class="row box-card-main">
+                {#                    users#}
                 <div id="card-main" class="col-md-4">
                     <h4 class="title-card-main">Utilisateurs</h4>
                     {% for user in serveurs.users|slice(0,3) %}
@@ -24,22 +19,20 @@
                     {% endfor %}
                     <a href="{{ path('list-Users') }}" class="btn btnForm btn-sm">Aller voir</a>
                 </div>
-
+                {#                    Alliances#}
                 <div id="card-main" class="col-md-4">
                     <h4 class="title-card-main">Alliances</h4>
-                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name) %}
+                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name|slice(0,3)) %}
                         <li class="list-unstyled litest">{{ alliance.name }}</li>
                     {% endfor %}
                     <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container-fluid">
         <div class="container-main">
             <!-- infos serveur de l'utilisateur -->
-            <h3 id="title-main" class="mb-4 p-2">Mon groupe</h3>
+            <h3 id="title-main" class="mb-4 p-2">Alliance</h3>
             <!-- infos sur mon groupe  -->
             <div class="row box-card-main">
                 <div id="card-main" class="col-md-4">
@@ -64,10 +57,10 @@
                         </h2>
                     {% endif %}
                 </div>
-{#                A MODIFIER #}
+                {#A MODIFIER #}
                 <div id="card-main" class="col-md-4">
-                    <h4 class="title-card-main">Titre</h4>
-                    {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name) %}
+                    <h4 class="title-card-main">Titre...</h4>
+                    {% for alliance in serveurs.alliances %}
                         <li class="list-unstyled litest">blablabla</li>
                     {% endfor %}
                     <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
@@ -75,5 +68,7 @@
             </div>
         </div>
     </div>
+
+
 
 {% endblock %}

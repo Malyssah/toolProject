@@ -7,7 +7,7 @@
     {#si admin#}
     {% if is_granted('ROLE_ADMIN') %}
         <main class="page-content">
-        <div class="container-fluid">
+        <div class="container">
             <h1 class="title-content">Admin - Liste des serveurs</h1>
             <hr>
             {% for label, messages in app.flashes %}

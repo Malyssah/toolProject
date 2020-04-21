@@ -19,18 +19,18 @@ class GestionServeur extends AbstractController
 	{
 		$userCourant = $this->getUser();
 		$serveurs = $userCourant->getServeur();
-		$alliance=$userCourant->getAlliance();
-		if($alliance){
+		$alliance = $userCourant->getAlliance();
+		if ($alliance) {
 			$usersAlliance = $alliance->getUsers();
-		}else{
+		} else {
 			$usersAlliance = null;
 		}
 
 
 		return $this->render('main.html.twig', [
-			'serveurs'=>$serveurs,
-			'alliance'=>$alliance,
-			'usersAlliance'=>$usersAlliance
+			'serveurs' => $serveurs,
+			'alliance' => $alliance,
+			'usersAlliance' => $usersAlliance
 		]);
 	}
 
@@ -40,15 +40,14 @@ class GestionServeur extends AbstractController
 	 * @param null $id
 	 * @return Response
 	 */
-	public function accueilServeur(ServeurRepository $serveurRepository, $id = null){
-		$serveur = $serveurRepository->findOneBy(['id'=>$id]);
+	public function accueilServeur(ServeurRepository $serveurRepository, $id = null)
+	{
+		$serveur = $serveurRepository->findOneBy(['id' => $id]);
 
-
-
-	    //Prendre les infos du serveur et les afficher dans une vue
-        return $this->render('main.html.twig',[
-        	'serveur'=>$serveur
+		//Prendre les infos du serveur et les afficher dans une vue
+		return $this->render('main.html.twig', [
+			'serveur' => $serveur
 		]);
 	}
-	}
+}
 
