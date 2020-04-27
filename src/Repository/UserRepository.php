@@ -41,6 +41,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findUserByServeurId($idServeur, $idUserCourant){
+    	return $querybuilder = $this->createQueryBuilder('u')
+			->where('u.serveur = :idServeur')
+			->andWhere('u.id != :idUserCourant')
+			->setParameter('idServeur', $idServeur)
+			->setParameter('idUserCourant',$idUserCourant);
+
+	}
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

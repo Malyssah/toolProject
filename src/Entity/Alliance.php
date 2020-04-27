@@ -38,6 +38,11 @@ class Alliance
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $chefAlliance;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -111,6 +116,18 @@ class Alliance
                 $user->setAlliance(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChefAlliance(): ?string
+    {
+        return $this->chefAlliance;
+    }
+
+    public function setChefAlliance(?string $chefAlliance): self
+    {
+        $this->chefAlliance = $chefAlliance;
 
         return $this;
     }

@@ -4,8 +4,8 @@
 
 {% block body %}
 
-    <div class="container vh-100">
-        <div class="page-content row align-items-center">
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+        <div class="page-content row">
             <div class="card">
                 <div class="card-body">
 
@@ -59,17 +59,17 @@
                     {{ form_end(form) }}
                     <br>
 
-                        <a href="{{ path('app_login') }}">Déjà un compte? connectez vous</a>
+                    <a href="{{ path('app_login') }}">Déjà un compte? connectez vous</a>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        $("#user_serveur").on('change',function(){
-            if ($(this).val() !== ''){
+        $("#user_serveur").on('change', function () {
+            if ($(this).val() !== '') {
                 $("#choicePeuple").show('fast');
-            }else{
+            } else {
                 $("#user_peuple").val('');
                 $("#choicePeuple").hide('fast');
 

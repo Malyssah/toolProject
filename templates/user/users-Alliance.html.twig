@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon alliance - ToolProject{% endblock %}
+{% block body %}
+
+    <div class="page-content vh-100 ">
+        <div class="container">
+            <h1 class="title-content">Alliance</h1>
+            <hr>
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
+            <div class="row justify-content-end">
+                <a href="{{ path('edit-Alliance',{ id : alliance.id }) }}"
+                   class="btn btn-success btn-sm mr-2"><i class="fas fa-pen"></i> Modifier</a>
+                <a href="{{ path('quitter-Alliance',{ id : alliance.id }) }}"
+                   class="btn btn-danger btn-sm"><i class="fas fa-times"></i>  Quitter</a>
+            </div>
+            <br>
+
+            <table class="table table-striped shadow p-3 mb-5 bg-white rounded">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Peuple</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in listeUsersAlliance %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.Peuple }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fas fa-eye"></i> voir (A faire)</a>
+                            {% if  is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('supprimer-Membre-Alliance',{ id:user.id }) }}" class=" btn btn-danger btn-sm">
+                                <i class="fas fa-times"> Renvoyer</i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

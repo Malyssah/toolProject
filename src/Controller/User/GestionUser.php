@@ -89,6 +89,7 @@ class GestionUser extends AbstractController
 		if (!$user) { //si pas d'utilisateur
 			$user = new User();
 		}
+		$oldPeuple = $user->getPeuple();
 		$form = $this->createForm(UserType::class, $user, array('creation' => 2, 'roles' => $rolesUserCourant));
 		$form->handleRequest($request);
 
@@ -97,7 +98,16 @@ class GestionUser extends AbstractController
 			$user = $form->getData();
 			$mdpClear = $user->getPlainPassword();
 			$serveurs = $form->get("serveur")->getData();
+			$peuple = $user->getPeuple();
 
+			if($oldPeuple !== $peuple){
+				 $troupe = $user->getTroupes();
+				 if ($troupe[0]){
+					 $troupe[0]->setCatapulte(null);
+					 $troupe[0]->setBelier(null);
+					 $manager->persist($troupe[0]);
+				 }
+			}
 			if ($mdpClear) {
 				$mdpEncoded = $encoder->encodePassword($user, $mdpClear);
 				$user->setPassword($mdpEncoded);
@@ -153,5 +163,45 @@ class GestionUser extends AbstractController
 			}
 		}
 		return $this->redirectToRoute('list-Users');
+	}
+
+	/**
+	 * @Route("/user/quitterAlliance/{id}", name="quitter-Alliance")
+	 * @param Request $request
+	 * @param EntityManagerInterface $manager
+	 * @param Alliance $alliance
+	 * @return RedirectResponse
+	 */
+	public function quitterAlliance(Alliance $alliance, Request $request, EntityManagerInterface $manager){
+
+		$userCourant = $this->getUser();
+		if ($alliance){
+			$alliance->removeUser($userCourant);
+			$manager->flush();
+		}
+		$this->addFlash('warning', 'Vous avez quitté votre alliance');
+		return $this->redirectToRoute('main');
+	}
+
+
+
+	/**
+	 * @Route("/users-Alliance", name="list-Users-Alliance")
+	 * @param UserRepository $userRepository
+	 * @return Response
+	 */
+	public function usersListAlliance(UserRepository $userRepository)
+	{
+		$userCourant = $this->getUser();
+		$listeUsersAlliance = null;
+		$alliance = $userCourant->getAlliance();
+		if ($alliance){
+			$listeUsersAlliance = $userRepository->findBy(['alliance' => $alliance],['username'=>'ASC']);
+		}
+		return $this->render('user/users-Alliance.html.twig', [
+			'userCourant' => $userCourant,
+			'listeUsersAlliance' => $listeUsersAlliance,
+			'alliance'=>$alliance
+		]);
 	}
 }

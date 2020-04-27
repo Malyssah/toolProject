@@ -1,31 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil ToolProject{% endblock %}
+{% block title %}Accueil - ToolProject{% endblock %}
 
 {% block body %}
 
-    <div class="page-content">
+    <div class="page-content vh-100">
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% if serveurs %}
         <h1 class="title-content">{{ serveurs.name }}</h1>
+        <hr>
         <div class="container-main">
             <!-- infos Générales serveur -->
             <h3 id="title-main" class="mb-4 p-2">Infos serveur</h3>
             <div class="row box-card-main">
-                {#                    users#}
+                {#users#}
                 <div id="card-main" class="col-md-4">
                     <h4 class="title-card-main">Utilisateurs</h4>
                     {% for user in serveurs.users|slice(0,3) %}
                         <li class="list-unstyled litest">{{ user.username }}</li>
                     {% endfor %}
-                    <a href="{{ path('list-Users') }}" class="btn btnForm btn-sm">Aller voir</a>
+                    <a href="{{ path('list-Users') }}" class="btn btnForm btn-sm col text-center">
+                        <i class="fas fa-eye"></i> Aller voir</a>
                 </div>
-                {#                    Alliances#}
+                {#Alliances#}
                 <div id="card-main" class="col-md-4">
                     <h4 class="title-card-main">Alliances</h4>
                     {% for alliance in serveurs.alliances|sort((a,b) => a.name <=> b.name|slice(0,3)) %}
                         <li class="list-unstyled litest">{{ alliance.name }}</li>
                     {% endfor %}
-                    <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
+                    <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm col text-center">
+                        <i class="fas fa-eye"></i> Aller voir</a>
                 </div>
             </div>
         </div>
@@ -37,15 +49,16 @@
             <div class="row box-card-main">
                 <div id="card-main" class="col-md-4">
                     {% if alliance %}
-                        <h4 class="title-card-main">Membres {{ alliance.name }}</h4>
+                        <h4 class="title-card-main"> Membres: {{ alliance.name }} </h4>
                         {% if usersAlliance %}
-                            {% for userAlliance in usersAlliance %}
+                            {% for userAlliance in usersAlliance|slice(0,3) %}
                                 <li class="list-unstyled litest">{{ userAlliance.username }}</li>
                             {% endfor %}
                         {% else %}
                             Aucun utilisateur dans l'alliance
                         {% endif %}
-                        <a href="#" class="btn btnForm btn-sm">Aller voir</a>
+                        <a href="{{ path('list-Users-Alliance') }}" class="btn btnForm btn-sm col text-center">
+                            <i class="fas fa-eye"></i> Aller voir</a>
                     {% else %}
                         Vous n'êtes rattaché à aucune alliance
                     {% endif %}
@@ -59,16 +72,14 @@
                 </div>
                 {#A MODIFIER #}
                 <div id="card-main" class="col-md-4">
-                    <h4 class="title-card-main">Titre...</h4>
+                    <h4 class="title-card-main">Titre</h4>
                     {% for alliance in serveurs.alliances %}
-                        <li class="list-unstyled litest">blablabla</li>
+                        <li class="list-unstyled litest">A faire</li>
                     {% endfor %}
-                    <a href="{{ path('list-Alliances') }}" class="btn btnForm btn-sm">Aller voir</a>
+                    <a href="#" class="btn btnForm btn-sm col text-center">
+                        <i class="fas fa-eye"></i> Aller voir</a>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 {% endblock %}

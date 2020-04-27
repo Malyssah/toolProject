@@ -3,8 +3,9 @@
 {% block title %}Admin - Créer un serveur{% endblock %}
 
 {% block body %}
-    <section class="d-flex justify-content-center">
-        <div class="card col-5">
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="page-content row">
+        <div class="card">
             <div class="card-body">
 
                 <h3 class="card-title titleForm" style="text-align: center;">Créer un serveur</h3>
@@ -22,8 +23,8 @@
                     {{ form_row(form.Ajouter, {'attr': {'class':'btn btn-lg btnForm btn-lg btn-block'}}) }}
                 </div>
                 {{ form_end(form) }}
-
+            </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

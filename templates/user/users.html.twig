@@ -34,17 +34,16 @@
                             <a href="#" class="btn btn-primary btn-sm">
                                 <i class="fas fa-eye"></i> voir </a>
                         </td>#}
-
                         {% if app.user.alliance %}
                             <td>
                                 {% if user.alliance %}
-                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Déjà membre d'une alliance">
-                                    <a href="" class="btn btn-success disabled btn-sm " style="pointer-events: none;">
-                                    <i class="fas fa-plus"></i> Ajouter</a>
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                          title="Déjà membre d'une alliance">
+                                    <a href="#" class="btn btn-danger disabled btn-sm " style="pointer-events: none;">
+{#                                    <i class="fas fa-plus"></i>#} Cet utilisateur à déjà une alliance</a>
                                     </span>
-                                    Cet utilisateur à déjà une alliance
                                 {% else %}
-                                    <a href="{{path('rejoindre-Alliance',{ id : user.id })}}"
+                                    <a href="{{ path('rejoindre-Alliance',{ id : user.id }) }}"
                                        class="btn btn-success btn-sm">
                                         <i class="fas fa-plus"></i> Ajouter</a>
                                 {% endif %}

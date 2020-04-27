@@ -21,7 +21,7 @@ class UserType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$creation = $options['creation']; //option creation pour l'ajout et edit user
-		$roles = $options['roles'];
+		$roles = $options['roles']; //option visible et gérable que par l'admin
 		$builder
 			->add('email', EmailType::class, array(
 				'label' => 'Email: '

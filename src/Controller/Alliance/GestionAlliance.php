@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\AllianceType;
 use App\Repository\AllianceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,11 @@ class GestionAlliance extends AbstractController
 	{
 		//recup l'utilisateur courant
 		$utilisateurCourant = $this->getUser();
-		$idAllianceUtilisateurCourant = $this->getUser()->getAlliance()->getid();
+		$allianceUtilisateurCourant = $this->getUser()->getAlliance();
+		$idAllianceUtilisateurCourant = null;
+		if ($allianceUtilisateurCourant){
+			$idAllianceUtilisateurCourant = $allianceUtilisateurCourant->getId();
+		}
 		$serveurUtilisateurCourant = $utilisateurCourant->getServeur();
 		$alliances = $allianceRepository->findBy(['serveur' => $serveurUtilisateurCourant]);
 
@@ -60,19 +65,10 @@ class GestionAlliance extends AbstractController
 
 			if ($form->isSubmitted() && $form->isValid()) {
 				/** @var Alliance $alliance */
-
 				$alliance = $form->getData();
-				//todo: rattacher l'utilisateur qui créé l'alliance
-				//$createurAlliance = $userCourant->getId->$this->addAlliance();
-				//$createurAlliance = $userCourant->getId()
-				//$createurAlliance = $userCourant->get("alliance")->getData();
-				//$createurAlliance = $userCourant->$this->addAlliance()->getData();
-				//$alliance->$this->addUser()->getData();
-				//$user->setAlliance($this);
-				//$usersAlliance = $alliance->addUser( $usersAlliance);
 
-				//$chefAlliance = $this->getUser()->addUser();
-				//$chefAlliance->$this->setAlliance();
+				$alliance->setServeur($serveurs);
+				$userCourant->setAlliance($alliance);
 
 				$manager->persist($alliance);
 				$manager->flush();
@@ -96,7 +92,10 @@ class GestionAlliance extends AbstractController
 	 */
 	public function editAlliance(Alliance $alliance, Request $request, EntityManagerInterface $manager)
 	{
-		$form = $this->createForm(AllianceType::class, $alliance);
+		//si utilisateur courant à un serveur
+		$userCourant = $this->getUser();
+		$serveurs = $userCourant->getServeur();
+		$form = $this->createForm(AllianceType::class, $alliance, array('creation' => 2));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -148,6 +147,24 @@ class GestionAlliance extends AbstractController
 				$manager->flush();
 			}
 		}
+		$this->addFlash('success', 'Vous avez rejoind cette alliance avec succès');
+		return $this->redirectToRoute('list-Users-Alliance');
+	}
+
+	/**
+	 * @Route("/alliance/supprimerMembreAlliance/{id}", name="supprimer-Membre-Alliance")
+	 * @param User $user
+	 * @param Request $request
+	 * @param EntityManagerInterface $manager
+	 * @return RedirectResponse
+	 */
+	public function supprimerMembreAlliance(User $user, Request $request, EntityManagerInterface $manager){
+
+		$user->setAlliance(null);
+
+		$manager->flush();
+		$this->addFlash('success', 'renvoie fait avec succès');
 		return $this->redirectToRoute('list-Alliances');
 	}
+
 }

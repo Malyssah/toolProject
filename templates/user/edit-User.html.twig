@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier{% endblock %}
+{% block title %}Modifier mon profil - ToolProject{% endblock %}
 
 {% block body %}
     <div class="container vh-100">
@@ -37,7 +37,7 @@
                         {{ form_row(form.serveur, {label_attr: {class: 'checkbox-custom'}}) }}
                     </div>
 
-                    <div class="form-group">
+                    <div id="choicePeuple" class="form-group" style="display: none">
                         {{ form_row(form.peuple) }}
                     </div>
 
@@ -61,4 +61,24 @@
             </div>
         </div>
     </div>
+    <script>
+        const userServeur = $("#user_serveur");
+        const choicePeuple = $("#choicePeuple");
+        $(document).ready(function () {
+            manageChoicePeuple();
+        });
+
+        userServeur.on('change', function () {
+           manageChoicePeuple();
+        });
+
+        function manageChoicePeuple(){
+            if (userServeur.val() !== '') {
+                choicePeuple.show('fast');
+            } else {
+                choicePeuple.hide('fast');
+
+            }
+        }
+    </script>
 {% endblock %}

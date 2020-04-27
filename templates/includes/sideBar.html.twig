@@ -1,3 +1,4 @@
+
 <div class="page-wrapper chiller-theme toggled">
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars"></i>
@@ -10,32 +11,31 @@
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-
             <div class="sidebar-header">
                 <div class="user-pic">
                     <img class="img-responsive img-rounded" src="{{ asset('img/user.jpg') }}"
                          alt="User picture">
                 </div>
-                    <div class="user-info">
+                <div class="user-info">
                     <span class="user-name">
                         <strong>{{ app.user.username }}</strong>
                     </span>
-                        <span class="user-role">
-                            {% if 'ROLE_ADMIN' in app.user.roles %}
-                                Administrateur
-                            {% elseif 'ROLE_MOD' in app.user.roles%}
-                                Modérateur
-                            {% elseif 'ROLE_USER' in app.user.roles %}
-                                Utilisateur
-                            {% endif %}
-                        </span>
-                        <span class="user-status">
+                    <span class="user-role">
+                        {% if 'ROLE_ADMIN' in app.user.roles %}
+                            Administrateur
+                        {% elseif 'ROLE_MOD' in app.user.roles %}
+                            Modérateur
+                        {% elseif 'ROLE_USER' in app.user.roles %}
+                            Utilisateur
+                        {% endif %}
+                    </span>
+                    <span class="user-status">
                      <i class="fa fa-circle"></i>
                         <span>Online</span>
                     </span>
-                    </div>
+                </div>
 
-                <!-- sidebar-header  -->
+                <!-- sidebar-search A FAIRE -->
                 {#<div class="sidebar-search">
                     <div>
                         <div class="input-group">
@@ -47,132 +47,133 @@
                             </div>
                         </div>
                     </div>#}
-
-                </div>
                 <!-- sidebar-search  -->
-                <div class="sidebar-menu">
-                    <ul>
-                        {% if app.user %}
-                            <li class="header-menu">
-                                <span>General</span>
-                            </li>
-                            <li>
-                                <a href="{{ path('main') }}">
-                                    <i class="fa fa-home"></i>
-                                    <span>Accueil</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('edit-User', {id:app.user.id}) }}">
-                                    <i class="fa fa-user-tie"></i>
-                                    <span>Profil</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('edit-troupe', {id:app.user.id}) }}">
-                                    <i class="fa fa-horse"></i>
-                                    <span>Mes troupes</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('list-Alliances') }}">
-                                    <i class="fa fa-flag"></i>
-                                    <span>Groupes</span>
-                                </a>
-                            </li>
-                            {#<li>
-                                <a href="{{ path('list-Users') }}">
-                                    <i class="fa fa-users"></i>
-                                    <span>Utilisateurs</span>
-                                </a>
-                            </li>#}
+            </div>
+
+            <div class="sidebar-menu">
+                <ul>
+                    {% if app.user %}
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+                        <li>
+                            <a href="{{ path('main') }}">
+                                <i class="fa fa-home"></i>
+                                <span>Accueil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('edit-User', {id:app.user.id}) }}">
+                                <i class="fa fa-user-tie"></i>
+                                <span>Profil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('edit-troupe', {id:app.user.id}) }}">
+                                <i class="fa fa-horse"></i>
+                                <span>Mes troupes</span>
+                            </a>
+                        </li>
+
+                        {% if app.user.alliance %}
+                        <li>
+                            <a href="{{ path('list-Users-Alliance') }}">
+                                <i class="fa fa-users"></i>
+                                <span>Mon alliance</span>
+                            </a>
+                        </li>
                         {% endif %}
+                        <li>
+                            <a href="{{ path('list-Alliances') }}">
+                                <i class="fa fa-flag"></i>
+                                <span>Groupes</span>
+                            </a>
+                        </li>
+
+                    {% endif %}
+                    <hr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="header-menu">
+                            <span>Admin</span>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin-list-Users') }}">
+                                <i class="fa fa-users"></i>
+                                <span>Utilisateurs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin-List-Serveurs') }}">
+                                <i class="fa fa-server"></i>
+                                <span>Serveurs</span>
+                            </a>
+                        </li>
                         <hr>
-
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="header-menu">
-                                <span>Admin</span>
-                            </li>
-
-                            <li>
-                                <a href="{{ path('admin-list-Users') }}">
-                                    <i class="fa fa-users"></i>
-                                    <span>Utilisateurs</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('admin-List-Serveurs') }}">
-                                    <i class="fa fa-server"></i>
-                                    <span>Serveurs</span>
-                                </a>
-                            </li>
-
-                            <hr>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-book"></i>
-                                    <span>A propos</span>
-                                    {#<span class="badge badge-pill badge-primary">Beta</span>#}
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-                <small class="d-block text-muted text-center">&copy; 2019-2020</small>
-                <!-- sidebar-menu  -->
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>A propos</span>
+                                {#<span class="badge badge-pill badge-primary">Beta</span>#}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-            <!-- sidebar-content  -->
-            <div class="sidebar-footer">
-                <a href="#">
-                    <i class="fa fa-bell"></i>
-                </a>
-                <a href="#">
-                    <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">7</span>
-                </a>
-                <a href="#">
-                    <i class="fa fa-cog"></i>
-                </a>
-                <a href="{{ path('app_logout') }}">
-                    <i class="fa fa-power-off "></i>
-                </a>
-            </div>
+            <small class="d-block text-muted text-center">&copy; 2019-2020</small>
+            <!-- sidebar-menu  -->
+        </div>
+        <!-- sidebar-content  -->
+        <div class="sidebar-footer">
+            <a href="#">
+                <i class="fa fa-bell"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-envelope"></i>
+                {#juste pour exemple#}
+                <span class="badge badge-pill badge-success notification">7</span>
+            </a>
+            <a href="#">
+                <i class="fa fa-cog"></i>
+            </a>
+            <a href="{{ path('app_logout') }}">
+                <i class="fa fa-power-off "></i>
+            </a>
+        </div>
     </nav>
     <!-- sidebar-wrapper End -->
 
 
+    <!-- script js  -->
+    <script>
+        jQuery(function ($) {
 
-<!-- script js  -->
-<script>
-    jQuery(function ($) {
+            $(".sidebar-dropdown > a").click(function () {
+                $(".sidebar-submenu").slideUp(200);
+                if (
+                    $(this)
+                        .parent()
+                        .hasClass("active")
+                ) {
+                    $(".sidebar-dropdown").removeClass("active");
+                    $(this)
+                        .parent()
+                        .removeClass("active");
+                } else {
+                    $(".sidebar-dropdown").removeClass("active");
+                    $(this)
+                        .next(".sidebar-submenu")
+                        .slideDown(200);
+                    $(this)
+                        .parent()
+                        .addClass("active");
+                }
+            });
 
-        $(".sidebar-dropdown > a").click(function () {
-            $(".sidebar-submenu").slideUp(200);
-            if (
-                $(this)
-                    .parent()
-                    .hasClass("active")
-            ) {
-                $(".sidebar-dropdown").removeClass("active");
-                $(this)
-                    .parent()
-                    .removeClass("active");
-            } else {
-                $(".sidebar-dropdown").removeClass("active");
-                $(this)
-                    .next(".sidebar-submenu")
-                    .slideDown(200);
-                $(this)
-                    .parent()
-                    .addClass("active");
-            }
+            $("#close-sidebar").click(function () {
+                $(".page-wrapper").removeClass("toggled");
+            });
+            $("#show-sidebar").click(function () {
+                $(".page-wrapper").addClass("toggled");
+            });
         });
-
-        $("#close-sidebar").click(function () {
-            $(".page-wrapper").removeClass("toggled");
-        });
-        $("#show-sidebar").click(function () {
-            $(".page-wrapper").addClass("toggled");
-        });
-    });
-</script>
+    </script>

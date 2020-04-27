@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <main class="page-content">
+    <div class="page-content vh-100">
         <a class="ml-5" href="{{ path('list-Alliances') }}"><i class="fas fa-angle-left"></i> retour à la liste des
             groupes</a>
         <hr>
@@ -26,10 +26,6 @@
                     {{ form_start(form) }}
 
                     <div class="form-group">
-                        {{ form_row(form.serveur) }}
-                    </div>
-
-                    <div class="form-group">
                         {{ form_row(form.name) }}
                     </div>
 
@@ -45,5 +41,5 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 {% endblock %}

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Groupes{% endblock %}
+{% block title %}Liste des Alliances du serveur - ToolProject{% endblock %}
 
 {% block body %}
 
-    <div class="page-content">
+    <div class="page-content vh-100 ">
         <div class="container">
-            <h1 class="title-content">Liste alliances</h1>
-
+            <h1 class="title-content">Alliances du serveur</h1>
+            <hr>
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert-{{ label }}">
@@ -17,14 +17,17 @@
             {% endfor %}
 
             <div class="row justify-content-end">
-                <a href="{{ path('add-Alliance') }}" class="btn btnForm btn-sm"><i class="fas fa-plus"></i> Créer
-                    un groupe</a>
+                {% if idAlliance %}
+                    {#si dans une alliance, n'affiche rien#}
+                {% else %}
+                    <a href="{{ path('add-Alliance') }}" class="btn btnForm btn-sm"><i class="fas fa-plus"></i>
+                        Créer un groupe</a>
+                {% endif %}
             </div>
             <br>
             <table class="table table-striped shadow p-3 mb-5 bg-white rounded">
                 <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
                     <th>nom</th>
                     <th>serveur</th>
                     <th>cadran</th>
@@ -34,19 +37,29 @@
                 <tbody>
                 {% for alliance in alliances %}
                 <tr>
-                    <td>{{ alliance.id }}</td>
                     <td>{{ alliance.name }}</td>
                     <td>{{ alliance.serveur }}</td>
                     <td>{{ alliance.cadran }}</td>
                     <td>
-                        {#<a href="#" class="btn btn-primary btn-sm">
-                            <i class="fas fa-eye"></i> voir</a>#}
+                        <a href="#" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> voir (A faire)</a>
+                        {#si c'est mon alliance alors#}
                         {% if idAlliance == alliance.id %}
-                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Déjà membre">
-                                <a href="" class="btn btn-success btn-sm disabled" style="pointer-events: none;">
-                                    <i class="fas fa-plus"></i> rejoindre
-                                </a>
-                            </span>
+                           <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                  title="Vous êtes déjà membre de cette alliance">
+                            <a href="" class="btn btn-light btn-sm disabled" style="pointer-events: none;">
+                                Vous êtes déjà membre de cette alliance
+                            </a>
+                        </span>
+                        {#Ou si j'ai une alliance #}
+                        {% elseif idAlliance %}
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                  title="Vous êtes déjà membre d'une alliance">
+                            <a href="" class="btn btn-light btn-sm disabled" style="pointer-events: none;">
+                                Déjà membre d'une alliance
+                            </a>
+                        </span>
+                        {#sinon#}
                         {% else %}
                             <a href="{{ path('add-Membre-Alliance',{ id : alliance.id }) }}"
                                class="btn btn-success btn-sm">
@@ -59,8 +72,4 @@
             </table>
         </div>
     </div>
-
-    <script>
-        $('#example').tooltip(options)
-    </script>
 {% endblock %}

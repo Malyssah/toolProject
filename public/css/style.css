@@ -14,10 +14,6 @@ span.orange {
 }
 
 /*corp général*/
-.page-content {
-    justify-content: center;
-    height: inherit;
-}
 
 .title-content {
     margin-bottom: 40px;
@@ -36,7 +32,7 @@ span.orange {
     background-color: #31353d;
     color: #ffffff;
     box-shadow: 0 2px 6px 0 #9fa1a0;
-    padding: 20px 25px 0px 25px;
+    padding: 20px 25px 0 25px;
 }
 
 .card-title {
@@ -50,7 +46,7 @@ span.orange {
     background-color: #da7703;
     border-color: #da7703;
     color: #ffffff;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .btnForm:hover {
@@ -65,49 +61,32 @@ span.orange {
 
 #title-main {
     border-radius: 5px;
-    /*    color: #ffffff;
-        background: rgb(49, 53, 61);
-        background: -moz-linear-gradient(90deg, rgba(49, 53, 61, 1) 18%, rgba(216, 217, 218, 1) 59%, rgba(255, 255, 255, 1) 100%);
-        background: -webkit-linear-gradient(90deg, rgba(49, 53, 61, 1) 18%, rgba(216, 217, 218, 1) 59%, rgba(255, 255, 255, 1) 100%);
-        background: linear-gradient(90deg, rgba(49, 53, 61, 1) 18%, rgba(216, 217, 218, 1) 59%, rgba(255, 255, 255, 1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#31353d", endColorstr="#ffffff", GradientType=1);*/
 }
 
 .container-main {
     margin: 10px 50px 10px 50px;
     padding: 45px 70px 60px 70px;
-    /*border: 8px #31353d double;*/
-    /*border-radius: 20px;*/
 }
 
 .box-card-main {
     justify-content: space-around;
-    /*Juste le temps de faire le css*/
-    /*border: 3px red dashed;*/
 }
 
 #card-main {
     padding: 30px 30px 40px 30px;
     background: #3a3f48;
     color: #ffffff;
-    /*border-radius: 20px;*/
-    /*Juste le temps de faire le css*/
-    /*border: 3px blue solid;*/
 }
 
 .title-card-main {
     font-family: 'Lora', serif;
     margin-bottom: 30px;
     text-align: center;
-    /*Juste le temps de faire le css*/
-    /*border: 3px #42cb1e solid;*/
 }
 
 .litest {
     margin-bottom: 3px;
     font-size: 16px;
-    /*Juste le temps de faire le css*/
-    /*border: 3px #dc7f60 solid;*/
 }
 
 
@@ -362,12 +341,12 @@ body {
 }
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown > a:after {
-    font-family: "Font Awesome 5 Free";
+    font-family: 'Lora', serif;
     font-weight: 900;
     content: "\f105";
     font-style: normal;
     display: inline-block;
-    font-style: normal;
+    /*font-style: normal;*/
     font-variant: normal;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -390,7 +369,7 @@ body {
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before {
     content: "\f111";
-    font-family: "Font Awesome 5 Free";
+    font-family: 'Lora', serif;
     font-weight: 400;
     font-style: normal;
     display: inline-block;
@@ -412,7 +391,7 @@ body {
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a .badge,
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a .label {
     float: right;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .sidebar-wrapper .sidebar-menu .sidebar-submenu {
@@ -474,7 +453,7 @@ body {
 .page-wrapper .page-content {
     display: inline-block;
     width: 100%;
-    padding-left: 0px;
+    padding-left: 0;
     padding-top: 20px;
 }
 
@@ -490,14 +469,14 @@ body {
 }
 
 ::-webkit-scrollbar-button {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #525965;
-    border: 0px none #ffffff;
-    border-radius: 0px;
+    border: 0 none #ffffff;
+    border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -510,7 +489,7 @@ body {
 
 ::-webkit-scrollbar-track {
     background: transparent;
-    border: 0px none #ffffff;
+    border: 0 none #ffffff;
     border-radius: 50px;
 }
 
@@ -576,7 +555,7 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu:focus + span,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
     color: #e99200;
-    text-shadow: 0px 0px 10px rgba(22, 199, 255, 0.5);
+    text-shadow: 0 0 10px rgba(22, 199, 255, 0.5);
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li a i,
@@ -592,7 +571,7 @@ body {
 
 .chiller-theme .sidebar-footer {
     background: #3a3f48;
-    box-shadow: 0px -1px 5px #282c33;
+    box-shadow: 0 -1px 5px #282c33;
     border-top: 1px solid #464a52;
 }
 
