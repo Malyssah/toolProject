@@ -45,11 +45,9 @@
                             <i class="fas fa-eye"></i> voir (A faire)</a>
                         {#si c'est mon alliance alors#}
                         {% if idAlliance == alliance.id %}
-                           <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                  title="Vous êtes déjà membre de cette alliance">
-                            <a href="" class="btn btn-light btn-sm disabled" style="pointer-events: none;">
-                                Vous êtes déjà membre de cette alliance
-                            </a>
+                           <span class="d-inline-block">
+                               <a href="{{ path('quitter-Alliance',{ id : alliance.id }) }}"
+                                  class="btn btn-danger btn-sm"><i class="fas fa-times"></i>  Quitter</a>
                         </span>
                         {#Ou si j'ai une alliance #}
                         {% elseif idAlliance %}
