@@ -6,7 +6,7 @@
 
     <div class="page-content">
         <div class="container">
-            <h3 class="title-content">Utilisateurs serveur</h3>
+            <h1 class="title-content">Utilisateurs serveur</h1>
 
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
@@ -34,8 +34,8 @@
                             <a href="#" class="btn btn-primary btn-sm">
                                 <i class="fas fa-eye"></i> voir </a>
                         </td>#}
+                        <td>
                         {% if app.user.alliance %}
-                            <td>
                                 {% if user.alliance %}
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
                                           title="Déjà membre d'une alliance">
@@ -43,12 +43,12 @@
 {#                                    <i class="fas fa-plus"></i>#} Cet utilisateur à déjà une alliance</a>
                                     </span>
                                 {% else %}
-                                    <a href="{{ path('rejoindre-Alliance',{ id : user.id }) }}"
+                                    <a href="#"
                                        class="btn btn-success btn-sm">
-                                        <i class="fas fa-plus"></i> Ajouter</a>
+                                        <i class="fas fa-plus"></i> Inviter (A faire)</a>
                                 {% endif %}
-                            </td>
                         {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

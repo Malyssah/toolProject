@@ -204,4 +204,13 @@ class GestionUser extends AbstractController
 			'alliance'=>$alliance
 		]);
 	}
+
+	/**
+	 * @Route("/propos", name="propos")
+	 */
+
+	public function aPropos()
+	{
+		return $this->render('propos.html.twig');
+	}
 }
