@@ -20,4 +20,5 @@ class Test extends AbstractController
 			'maVariable' => $maVariable,
 		]);
 	}
+
 }
